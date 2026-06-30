@@ -40,6 +40,27 @@ The primary objectives of this project are:
 
 ## 7. Scope
 
+### In Scope
+
+- Customer onboarding and KYC analytics
+- Transaction monitoring
+- Customer risk scoring
+- AML rule engine
+- Sanctions screening
+- Predictive analytics for suspicious activity detection
+- Snowflake data warehouse
+- PySpark ETL pipelines
+- SQL analytics
+- Executive dashboards using Looker Studio and Tableau
+
+### Out of Scope
+
+- Real-time payment processing
+- Production deployment
+- Mobile banking applications
+- Internet banking systems
+- Customer authentication
+
 ## 8. Success Metrics
 
 ## 9. Assumptions
