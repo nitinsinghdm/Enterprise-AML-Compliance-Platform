@@ -24,6 +24,16 @@ The primary objectives of this project are:
 
 ## 4. Stakeholders
 
+| Stakeholder | Responsibility |
+|-------------|---------------|
+| Chief Compliance Officer | Executive sponsor and strategic oversight |
+| Compliance Officers | Investigate AML alerts and suspicious activity |
+| AML Analysts | Review high-risk customers and transactions |
+| Risk Managers | Monitor customer and country risk |
+| Data Analysts | Build analytical reports and dashboards |
+| Data Engineers | Develop ETL pipelines and maintain data infrastructure |
+| Executive Management | Monitor KPIs and compliance performance |
+
 ## 5. Functional Requirements
 
 ## 6. Non-Functional Requirements
