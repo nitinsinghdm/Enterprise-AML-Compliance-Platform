@@ -12,6 +12,16 @@ The objective of this project is to design and develop an enterprise-grade Compl
 
 ## 3. Business Objectives
 
+The primary objectives of this project are:
+
+- Reduce the number of false positive AML alerts.
+- Improve customer risk assessment through data-driven risk scoring.
+- Centralize customer, transaction, and compliance data into a modern analytics platform.
+- Automate data processing using scalable ETL pipelines.
+- Enable real-time executive reporting through interactive dashboards.
+- Support regulatory compliance through improved monitoring and reporting capabilities.
+- Build a scalable architecture capable of handling millions of daily transactions.
+
 ## 4. Stakeholders
 
 ## 5. Functional Requirements
