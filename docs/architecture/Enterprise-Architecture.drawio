@@ -1,0 +1,139 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="x9xC3atp0-Egfnwqjnfk">
+    <mxGraphModel dx="2075" dy="2885" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="&lt;font&gt;NorthStar Bank&lt;/font&gt;" vertex="1">
+          <mxGeometry height="82.53968253968256" width="251" x="295.5" y="-1397" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---3" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;direction=south;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="81.59" width="600" x="123.5" y="-1314.46" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="Customer Management&amp;nbsp;" vertex="1">
+          <mxGeometry height="37.33" width="251" x="22" y="-1217" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---8" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="Transaction System" vertex="1">
+          <mxGeometry height="37.33" width="214" x="614" y="-1220.76" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="KYC System" vertex="1">
+          <mxGeometry height="37.33" width="204.5" x="318.75" y="-1217" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;spacingBottom=0;" value="&amp;nbsp; External Compliance Data&lt;div&gt;&lt;div&gt;(Sanctions, PEP, Country Risk)&amp;nbsp;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="58" width="342.75" x="60" y="-1055.38" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---11" parent="1" style="line;strokeWidth=2;html=1;direction=south;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="74.28571428571429" width="10" x="418.5" y="-1310.8092063492063" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="Operational Database (PostgreSQL)" vertex="1">
+          <mxGeometry height="53.38" width="299" x="277.5" y="-873" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---78" parent="1" style="line;strokeWidth=2;html=1;direction=south;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="42.29" width="10" x="718" y="-1179.67" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---81" parent="1" style="line;strokeWidth=2;html=1;direction=south;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="42.29" width="10" x="120.5" y="-1179.67" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---82" parent="1" style="line;strokeWidth=2;html=1;direction=west;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="36" width="600" x="125" y="-1157.38" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---83" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;spacingBottom=0;" value="&lt;div&gt;Reference Data&lt;/div&gt;&lt;div&gt;(Currency, Countries, Branches)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="62.54" width="347.75" x="442.25" y="-1056.38" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---90" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="74.29" width="20" x="235" y="-1137.38" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---91" parent="S47-KnUvc3bQ0oQ2qc---90" style="line;strokeWidth=2;html=1;direction=south;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="58.53052978906085" width="10" x="5" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---92" parent="S47-KnUvc3bQ0oQ2qc---90" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="15.758219558593305" width="20" y="58.531780441406696" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---96" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="74.29" width="20" x="595" y="-1127.38" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---97" parent="S47-KnUvc3bQ0oQ2qc---96" style="line;strokeWidth=2;html=1;direction=south;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="58.53052978906085" width="10" x="5" y="-10" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---98" parent="S47-KnUvc3bQ0oQ2qc---96" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="15.758219558593305" width="20" y="49.531780441406696" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---99" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;direction=north;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="82.54" width="360" x="245" y="-974.84" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---102" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="15.758219558593305" width="20" x="113.5" y="-1236.52" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---103" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="15.758219558593305" width="20" x="413.5" y="-1236.52" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---104" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="15.758219558593305" width="20" x="711" y="-1236.52" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---105" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="15.758219558593305" width="20" x="415" y="-892.3" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---106" parent="1" style="line;strokeWidth=2;html=1;direction=south;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="42.7" width="10" x="420" y="-806.62" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---107" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="PySpark ETL Pipeline&lt;br&gt;                  Extract → Clean → Validate → Transform → Enrich" vertex="1">
+          <mxGeometry height="82.54" width="549" x="153.5" y="-751.9200000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---108" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="415" y="-763.92" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---109" parent="1" style="line;strokeWidth=2;html=1;direction=south;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="42.7" width="10" x="421" y="-669.38" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---110" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="&amp;nbsp;Snowflake Data Warehouse&lt;br&gt;                    Bronze → Silver → Gold Architecture" vertex="1">
+          <mxGeometry height="82.54" width="520" x="167.5" y="-606.6800000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---111" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="416" y="-626.68" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---112" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;direction=south;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="70" width="605" x="120" y="-396" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---114" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="15.758219558593305" width="20" x="111.5" y="-324.40999999999997" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---116" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="15.758219558593305" width="20" x="715.75" y="-325.99999999999994" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---121" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="Data Marts" vertex="1">
+          <mxGeometry height="32.39" width="169" x="638.5" y="-294" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---122" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="Risk Scoring &amp;amp; Predictive Models" vertex="1">
+          <mxGeometry height="42.39" width="220" x="19" y="-294" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---155" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="&lt;div&gt;Business Intelligence Layer&lt;/div&gt;" vertex="1">
+          <mxGeometry height="48.24" width="300" x="271" y="-160.24" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---156" parent="1" style="line;strokeWidth=2;html=1;direction=south;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="42.7" width="10" x="420.5" y="-536" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---157" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="&amp;nbsp;Analytics Layer (SQL)&lt;br&gt;        Views • Business Metrics • Reports" vertex="1">
+          <mxGeometry height="82.54" width="520" x="167" y="-473.30000000000007" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---158" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="415.5" y="-493.29999999999995" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---160" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;direction=north;fontFamily=Verdana;fontStyle=0;fontSize=20;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;locked=1;connectable=0;" value="" vertex="1">
+          <mxGeometry height="64" width="605" x="120" y="-242" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---161" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="15.758219558593305" width="20" x="413" y="-176.99999999999991" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---164" parent="1" style="line;strokeWidth=2;html=1;direction=south;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="30" width="10" x="421.5" y="-120" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---165" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="&amp;nbsp;Executive Dashboards &amp;amp; Compliance Reports" vertex="1">
+          <mxGeometry height="37.3" width="520" x="168" y="-65" as="geometry" />
+        </mxCell>
+        <mxCell id="S47-KnUvc3bQ0oQ2qc---166" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.merge_or_storage;whiteSpace=wrap;fontFamily=Verdana;fontStyle=0;fontSize=20;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="416.5" y="-89.29999999999995" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
