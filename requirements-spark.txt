@@ -1,0 +1,4 @@
+-r requirements.txt
+pyspark==3.5.3
+# Spark 3.5 pandas interop imports distutils; Python 3.12 needs setuptools.
+setuptools==75.8.0

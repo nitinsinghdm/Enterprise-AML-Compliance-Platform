@@ -1,11 +1,11 @@
 import psycopg
 
-connection = psycopg.connect(
-    host="localhost",
-    port=5435,
-    dbname="northstar_bank",
-    user="rdxalpha"
-)
+# Environment-only configuration; standard PG* variables remain supported.
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv(Path(__file__).resolve().parents[1] / '.env', override=False)
+connection = psycopg.connect(os.getenv('DATABASE_URL', ''), connect_timeout=10)
 
 with connection.cursor() as cursor:
     cursor.execute("""

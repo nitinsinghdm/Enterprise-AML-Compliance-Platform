@@ -1,11 +1,8 @@
-pandas
-numpy
-matplotlib
-plotly
-scikit-learn
-xgboost
-pyspark
-snowflake-connector-python
-snowflake-snowpark-python
-python-dotenv
-jupyter
+# Tested with Python 3.12. Optional engines are installed separately.
+psycopg[binary]==3.3.6
+Faker==39.1.0
+python-dotenv==1.2.4
+pandas==2.3.3
+numpy==2.5.4
+scikit-learn==1.9.1
+joblib==1.6.0
