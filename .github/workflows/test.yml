@@ -1,0 +1,36 @@
+name: AML pipeline checks
+on:
+  push:
+  pull_request:
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17.6
+        env:
+          POSTGRES_USER: aml_test
+          POSTGRES_PASSWORD: test_only_password
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U aml_test -d postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: pip install -r requirements-dev.txt -r requirements-spark.txt -r requirements-snowflake.txt
+      - run: python -m pytest -q
+        env:
+          AML_TEST_DSN: postgresql://aml_test:test_only_password@localhost:5432/postgres
+          AML_TEST_SPARK: '1'
+          SPARK_LOCAL_IP: 127.0.0.1
+          PYSPARK_PYTHON: python

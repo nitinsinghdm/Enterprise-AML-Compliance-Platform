@@ -1,0 +1,150 @@
+<mxfile host="65bd71144e">
+    <diagram id="50-HTu2NR9UsYS9c3-yA" name="Page-1">
+        <mxGraphModel dx="3540" dy="2875" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="0" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="104" value="&lt;pre&gt;&lt;i&gt;customers&lt;/i&gt;&lt;/pre&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;rounded=1;fontSize=23;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+                    <mxGeometry x="-1080" y="-216.116170212766" width="428" height="516.063829787234" as="geometry">
+                        <mxRectangle x="-60" y="200" width="200" height="50" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="105" value="&lt;pre&gt;&lt;b&gt;PK customer_id&lt;br&gt;&lt;/b&gt;customer_number&lt;br&gt;first_name&lt;br&gt;last_name&lt;br&gt;date_of_birth&lt;br&gt;&lt;b&gt;nationality_id (FK)&lt;br&gt;residence_country_id (FK)&lt;/b&gt;&lt;br&gt;occupation&lt;br&gt;annual_income&lt;br&gt;source_of_funds&lt;br&gt;pep_flag&lt;br&gt;customer_risk_level&lt;br&gt;customer_status&lt;br&gt;created_at&lt;br&gt;updated_at&lt;/pre&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=23;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;container=0;" vertex="1" parent="104">
+                    <mxGeometry y="40" width="428" height="476.063829787234" as="geometry"/>
+                </mxCell>
+                <mxCell id="118" value="&lt;pre&gt;&lt;i&gt;countries&lt;/i&gt;&lt;/pre&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;rounded=1;fontSize=23;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+                    <mxGeometry x="-562.8333333333334" y="-740" width="410.1666666666666" height="250.21276595744678" as="geometry">
+                        <mxRectangle x="280" y="40" width="200" height="50" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="120" value="&lt;pre&gt;&lt;i&gt;accounts&lt;/i&gt;&lt;/pre&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;rounded=1;fontSize=23;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+                    <mxGeometry x="-224" y="-208.29787234042556" width="428" height="500.42553191489355" as="geometry">
+                        <mxRectangle x="280" y="200" width="200" height="50" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="142" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;elbow=vertical;strokeWidth=2;endArrow=ERoneToMany;endFill=0;fontSize=23;" edge="1" parent="1" source="122" target="121">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="160" value="&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); font-size: 22px;&quot;&gt;&amp;nbsp;1&amp;nbsp;&lt;/font&gt;&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBorderColor=default;" vertex="1" connectable="0" parent="142">
+                    <mxGeometry x="-0.7347" y="-3" relative="1" as="geometry">
+                        <mxPoint x="-4" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="122" value="&lt;pre&gt;&lt;i&gt;branches&lt;/i&gt;&lt;/pre&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;rounded=1;fontSize=23;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+                    <mxGeometry x="-224" y="464.14893617021266" width="428" height="265.8510638297872" as="geometry">
+                        <mxRectangle x="560" y="40" width="200" height="50" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="124" value="&lt;pre&gt;&lt;i&gt;transactions&lt;/i&gt;&lt;/pre&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;rounded=1;fontSize=23;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;textShadow=0;container=0;" vertex="1" parent="1">
+                    <mxGeometry x="632" y="-223.936170212766" width="428" height="516.063829787234" as="geometry">
+                        <mxRectangle x="780" y="200" width="200" height="50" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="128" value="&lt;pre&gt;&lt;i&gt;currencies&lt;/i&gt;&lt;/pre&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;rounded=1;fontSize=23;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=1;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+                    <mxGeometry x="150.5" y="-583.6170212765958" width="410.1666666666666" height="250.21276595744678" as="geometry">
+                        <mxRectangle x="280" y="360" width="200" height="50" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="135" value="" style="edgeStyle=orthogonalEdgeStyle;fontSize=23;html=1;endArrow=ERoneToMany;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;elbow=vertical;strokeWidth=2;shadow=1;flowAnimation=0;" edge="1" parent="1" source="119" target="104">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="-295.33333333333326" y="260.8510638297871" as="sourcePoint"/>
+                        <mxPoint x="-117.00000000000011" y="104.46808510638277" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="145" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;b&gt;&lt;i&gt;nationality_id&lt;/i&gt;&lt;/b&gt;&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="135">
+                    <mxGeometry x="0.1723" y="5" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="154" value="&lt;b&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;&amp;nbsp;1&amp;nbsp;&lt;/font&gt;&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBorderColor=default;" vertex="1" connectable="0" parent="135">
+                    <mxGeometry x="-0.9148" y="-5" relative="1" as="geometry">
+                        <mxPoint x="12" y="2" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="136" value="" style="fontSize=23;html=1;endArrow=ERoneToMany;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="104" target="120">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="-295.33333333333326" y="260.8510638297871" as="sourcePoint"/>
+                        <mxPoint x="-117.00000000000011" y="104.46808510638277" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="164" value="&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); font-size: 22px;&quot;&gt;&amp;nbsp;1&amp;nbsp;&lt;/font&gt;&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBorderColor=default;" vertex="1" connectable="0" parent="136">
+                    <mxGeometry x="-0.9203" y="-4" relative="1" as="geometry">
+                        <mxPoint x="5" y="-4" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="138" value="" style="fontSize=23;html=1;endArrow=ERoneToMany;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="205" y="41.914893617021335" as="sourcePoint"/>
+                        <mxPoint x="633" y="34.095744680850885" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="159" value="&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); font-size: 22px;&quot;&gt;&amp;nbsp;1&amp;nbsp;&lt;/font&gt;&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBorderColor=default;" vertex="1" connectable="0" parent="138">
+                    <mxGeometry x="-0.8863" relative="1" as="geometry">
+                        <mxPoint x="-1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="139" value="" style="fontSize=23;html=1;endArrow=ERoneToMany;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="129" target="120">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="-259.66666666666686" y="167.02127659574467" as="sourcePoint"/>
+                        <mxPoint x="-10" y="167.02127659574467" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="156" value="&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); font-size: 22px;&quot;&gt;&amp;nbsp;1&amp;nbsp;&lt;/font&gt;&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBorderColor=default;" vertex="1" connectable="0" parent="139">
+                    <mxGeometry x="-0.9075" y="1" relative="1" as="geometry">
+                        <mxPoint x="-3" y="-1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="140" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;endArrow=ERoneToMany;endFill=0;strokeWidth=2;fontSize=23;" edge="1" parent="1" source="119" target="124">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="158" value="&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); font-size: 22px;&quot;&gt;&amp;nbsp;1&amp;nbsp;&lt;/font&gt;&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBorderColor=default;" vertex="1" connectable="0" parent="140">
+                    <mxGeometry x="-0.966" relative="1" as="geometry">
+                        <mxPoint x="-1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="141" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;endArrow=ERoneToMany;endFill=0;fontSize=23;" edge="1" parent="1" source="129" target="124">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="157" value="&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); font-size: 22px;&quot;&gt;&amp;nbsp;1&amp;nbsp;&lt;/font&gt;&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBorderColor=default;" vertex="1" connectable="0" parent="141">
+                    <mxGeometry x="-0.9132" y="-6" relative="1" as="geometry">
+                        <mxPoint x="2" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="119" value="&lt;pre&gt;&lt;b&gt;PK country_id&lt;br&gt;&lt;/b&gt;country_name&lt;br&gt;iso_code&lt;br&gt;risk_rating&lt;/pre&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=23;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;container=0;" vertex="1" parent="1">
+                    <mxGeometry x="-562.8333333333334" y="-700" width="410.1666666666666" height="210.21276595744678" as="geometry"/>
+                </mxCell>
+                <mxCell id="121" value="&lt;pre&gt;&lt;b&gt;PK account_id&lt;br&gt;&lt;/b&gt;account_number&lt;br&gt;&lt;b&gt;FK customer_id&lt;br&gt;FK branch_id&lt;br&gt;FK currency_id&lt;br&gt;&lt;/b&gt;iban&lt;br&gt;account_type&lt;br&gt;account_status&lt;br&gt;opened_date&lt;br&gt;closed_date&lt;br&gt;balance&lt;br&gt;created_at&lt;br&gt;updated_at&lt;/pre&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=23;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;container=0;" vertex="1" parent="1">
+                    <mxGeometry x="-224" y="-168.29787234042556" width="428" height="460.42553191489355" as="geometry"/>
+                </mxCell>
+                <mxCell id="123" value="&lt;pre&gt;&lt;b&gt;PK branch_id&lt;br&gt;&lt;/b&gt;branch_name&lt;br&gt;branch_code&lt;br&gt;city&lt;br&gt;&lt;b&gt;FK country_id&lt;/b&gt;&lt;/pre&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=23;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;container=0;" vertex="1" parent="1">
+                    <mxGeometry x="-224" y="504.14893617021266" width="428" height="225.85106382978722" as="geometry"/>
+                </mxCell>
+                <mxCell id="125" value="&lt;pre&gt;&lt;b&gt;PK transaction_id&lt;br&gt;FK account_id&lt;br&gt;FK beneficiary_id&lt;br&gt;FK transaction_type_id&lt;br&gt;FK currency_id&lt;br&gt;FK country_id&lt;br&gt;FK merchant_category_id&lt;br&gt;&lt;/b&gt;amount&lt;br&gt;transaction_direction&lt;br&gt;channel&lt;br&gt;payment_reference&lt;br&gt;transaction_status&lt;br&gt;transaction_timestamp&lt;br&gt;created_at&lt;/pre&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=23;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;textShadow=0;container=0;" vertex="1" parent="1">
+                    <mxGeometry x="632" y="-183.936170212766" width="428" height="476.063829787234" as="geometry"/>
+                </mxCell>
+                <mxCell id="129" value="&lt;pre&gt;&lt;b&gt;PK currency_id&lt;br&gt;&lt;/b&gt;currency_name&lt;br&gt;currency_code&lt;br&gt;symbol&lt;/pre&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=23;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;container=0;" vertex="1" parent="1">
+                    <mxGeometry x="150.5" y="-543.6170212765958" width="410.1666666666666" height="210.21276595744678" as="geometry"/>
+                </mxCell>
+                <mxCell id="144" value="" style="edgeStyle=orthogonalEdgeStyle;fontSize=23;html=1;endArrow=ERoneToMany;entryX=0.75;entryY=0;entryDx=0;entryDy=0;exitX=0.011;exitY=0.58;exitDx=0;exitDy=0;elbow=vertical;strokeWidth=2;shadow=1;flowAnimation=0;exitPerimeter=0;" edge="1" parent="1" source="119" target="104">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="-553" y="-637" as="sourcePoint"/>
+                        <mxPoint x="-963" y="-214" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="146" value="&lt;b&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;i&gt;residence_country_id&lt;/i&gt;&lt;/font&gt;&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="144">
+                    <mxGeometry x="0.2349" y="2" relative="1" as="geometry">
+                        <mxPoint y="1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="155" value="&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); font-size: 22px;&quot;&gt;&amp;nbsp;1&amp;nbsp;&lt;/font&gt;&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBorderColor=default;" vertex="1" connectable="0" parent="144">
+                    <mxGeometry x="-0.9399" y="-1" relative="1" as="geometry">
+                        <mxPoint x="-10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="165" value="&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;NorthStar Bank&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;Core Banking Entity Relationship Diagram (ERD)&amp;nbsp; &amp;nbsp;v.1&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=30;fontStyle=1;labelBorderColor=none;textShadow=1;" vertex="1" parent="1">
+                    <mxGeometry x="-390" y="-940" width="740" height="120" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

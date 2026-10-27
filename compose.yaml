@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17.6
+    environment:
+      POSTGRES_DB: northstar_bank
+      POSTGRES_USER: aml
+      POSTGRES_PASSWORD: ${PGPASSWORD:?Set PGPASSWORD in .env before starting PostgreSQL}
+    ports:
+      - "127.0.0.1:${PGPORT:-5435}:5432"
+    volumes:
+      - aml_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aml -d northstar_bank"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+volumes:
+  aml_postgres:
