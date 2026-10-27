@@ -27,7 +27,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - run: pip install -r requirements-dev.txt -r requirements-spark.txt -r requirements-snowflake.txt
+      - run: pip install -r requirements-dev.txt -r requirements-spark.txt -r requirements-snowflake.txt -r requirements-dashboard.txt
       - run: python -m pytest -q
         env:
           AML_TEST_DSN: postgresql://aml_test:test_only_password@localhost:5432/postgres

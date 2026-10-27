@@ -5,7 +5,11 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from .db import ROOT
+
 DATASETS = {
+    'pipeline_batches': 'SELECT batch_id,entity,started_at,finished_at,accepted,rejected,replayed FROM staging.ingestion_batches ORDER BY started_at DESC',
+    'quality_checks': (ROOT / 'sql/tests/02_pipeline_validation.sql').read_text().rstrip().rstrip(';'),
     'transaction_facts': 'SELECT * FROM analytics.transaction_facts ORDER BY transaction_id',
     'customer_features': 'SELECT * FROM analytics.customer_features ORDER BY customer_id',
     'dashboard_daily': 'SELECT * FROM analytics.dashboard_daily ORDER BY transaction_date,destination_country,channel',
