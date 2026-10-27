@@ -1,12 +1,13 @@
 """Capture the real localhost dashboard. Start Streamlit before running this script."""
 from pathlib import Path
+import os
 from playwright.sync_api import sync_playwright
 
 root = Path(__file__).resolve().parents[1]
 with sync_playwright() as p:
     browser = p.chromium.launch()
     page = browser.new_page(viewport={'width':1600,'height':1500},device_scale_factor=1)
-    page.goto('http://127.0.0.1:8501',wait_until='networkidle')
+    page.goto(os.environ.get('AML_DASHBOARD_URL', 'http://127.0.0.1:8501'),wait_until='networkidle')
     page.get_by_role('heading',name='Follow the money. Understand the signals.').wait_for()
     page.locator('.js-plotly-plot').last.wait_for()
     page.evaluate('document.fonts.ready')

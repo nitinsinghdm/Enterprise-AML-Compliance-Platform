@@ -7,20 +7,24 @@ from aml.dashboard_data import EXPORT, activity_metrics, filter_activity, load_s
 
 st.set_page_config(page_title='NorthStar | AML Observatory', page_icon='◈', layout='wide')
 st.markdown('''<style>
+html, body, [data-testid="stApp"] {font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .block-container {padding-top:4rem;max-width:1440px}
-[data-testid="stMetric"] {background:#132136;border:1px solid #26364d;padding:20px;border-radius:12px}
-[data-testid="stMetricLabel"] {color:#9eafc4;font-size:13px}
+[data-testid="stMetric"] {background:#171d18;border:1px solid #354036;padding:20px;border-radius:16px}
+[data-testid="stMetricLabel"] {color:#a7b0a5;font-size:13px}
 h1 {letter-spacing:-1.6px;font-weight:750!important}
 h3 {letter-spacing:-.4px}
-.eyebrow {color:#5ee0b5;font-size:12px;letter-spacing:2px;font-weight:700}
-.hero-copy {color:#9eafc4;font-size:17px;max-width:840px;margin-bottom:28px}
-[data-testid="stSidebar"] {border-right:1px solid #26364d}
-[data-testid="stAlert"] p {color:#c2d7ef}
+button:focus-visible, a:focus-visible {outline:3px solid #d2f783!important;outline-offset:4px}
+@media(max-width:640px) {h1 {font-size:2rem!important;letter-spacing:-1px}.block-container {padding-left:1rem;padding-right:1rem}}
+.eyebrow {color:#d2f783;font-size:12px;letter-spacing:2px;font-weight:700}
+.hero-copy {color:#a7b0a5;font-size:17px;max-width:840px;margin-bottom:28px}
+[data-testid="stSidebar"] {border-right:1px solid #354036}
+[data-testid="stAlert"] p {color:#f3f5ec}
 </style>''', unsafe_allow_html=True)
 
 with st.sidebar:
     st.markdown('## ◈ NorthStar')
     st.caption('AML OBSERVATORY')
+    st.caption('01 / Generate · 02 / Validate · 03 / Investigate')
     st.divider()
     page = st.radio('Explore', ['Overview', 'Alert explorer', 'Customer risk', 'Pipeline & guide'], label_visibility='collapsed')
     st.divider()
@@ -28,6 +32,7 @@ with st.sidebar:
     st.caption('Synthetic research data · read-only')
     st.button('Reload snapshot', help='Rereads files; it does not run the pipeline or connect to a database.')
     st.caption('No background jobs run in this interface. Each view describes the latest selected snapshot.')
+    st.link_button('Read the project walkthrough ↗', 'https://nitinsinghdm.github.io/aml.html')
 
 try:
     snapshot = load_snapshot(mode)
@@ -45,11 +50,11 @@ st.title({'Overview':'Follow the money. Understand the signals.', 'Alert explore
 st.markdown('<div class="hero-copy">Explore payment activity, explainable monitoring rules and customer risk in one place.</div>', unsafe_allow_html=True)
 st.caption(f"{mode.upper()}  ·  Exported {snapshot['manifest']['exported_at'][:19].replace('T', ' ')} UTC  ·  Synthetic data, not live banking activity")
 
-COLORS = ['#5ee0b5','#6ba5ff','#f7c66b','#e58da9']
+COLORS = ['#d2f783','#6ba5ff','#f7c66b','#e58da9']
 
 def chart(fig):
     fig.update_layout(template='plotly_dark', paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(color='#b5c5d8'), margin=dict(l=12,r=12,t=16,b=12), height=300,
+        font=dict(color='#a7b0a5'), margin=dict(l=12,r=12,t=16,b=12), height=300,
         legend_title_text='', xaxis_title=None, yaxis_title=None)
     st.plotly_chart(fig, use_container_width=True, config={'displayModeBar':False})
 

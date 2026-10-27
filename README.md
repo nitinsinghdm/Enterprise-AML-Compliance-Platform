@@ -13,7 +13,7 @@ An end-to-end synthetic banking analytics project: generate payments, validate r
 
 ## 📊 Interactive dashboard
 
-The **NorthStar AML Observatory** makes the pipeline visible. Explore activity, inspect alert evidence, compare customer scores, and trace the data through each processing stage.
+The **NorthStar AML Observatory** makes the pipeline visible, with a forest-green and lime interface inspired by [my portfolio](https://nitinsinghdm.github.io/aml.html). Explore activity, inspect alert evidence, compare customer scores, and trace the data through each processing stage.
 
 ![NorthStar AML dashboard showing payment activity, destination countries and monitoring signals](images/dashboard-overview.png)
 

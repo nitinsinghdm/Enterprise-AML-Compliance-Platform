@@ -42,3 +42,7 @@ python scripts/capture_dashboard.py
 ```
 
 The screenshot script saves the Overview and Alert explorer pages to `images/`. `images/pipeline.svg` is an editable diagram. UI tests use Streamlit AppTest; browser captures additionally check the rendered appearance.
+
+## Portfolio visual language
+
+The interface uses the portfolio’s forest background (`#101411`), raised green surfaces (`#171d18`), lime accents (`#d2f783`), and rounded metric cards. Navigation retains native keyboard controls and a visible focus outline. The sidebar links to the public project walkthrough; no dataset is sent to the portfolio.

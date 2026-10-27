@@ -30,3 +30,7 @@ The test suite covers safe bootstrap replay, generator determinism, exact record
 - Chromium browser verification exercised the running Overview, Alert explorer and Pipeline & guide pages. README PNGs are actual captures of the bundled synthetic preview.
 - The exporter now includes four recorded ingestion batches and eight SQL audit results in the saved demo snapshot. The approximately 65 KB preview contains summary rows only.
 - No cloud deployment, live bank feed, background job scheduler or hosted dashboard is claimed. The local interface reads bundled data or the latest exported files.
+
+### Portfolio visual finish — 27 October 2026
+
+Updated the dashboard palette and README screenshots to match the author's portfolio. The complete PostgreSQL 18 / Java 17 suite passed again: **38 passed in 29.06s**. Chromium captured the rendered Overview and Alert explorer and checked the guide page. No live Snowflake or Looker Studio validation was performed. The portfolio case study links to the runnable local interface and its setup instructions.

@@ -1,9 +1,9 @@
 [theme]
 base = "dark"
-primaryColor = "#5ee0b5"
-backgroundColor = "#0b1220"
-secondaryBackgroundColor = "#132136"
-textColor = "#e7eef7"
+primaryColor = "#d2f783"
+backgroundColor = "#101411"
+secondaryBackgroundColor = "#171d18"
+textColor = "#f3f5ec"
 font = "sans serif"
 [server]
 address = "127.0.0.1"
