@@ -34,3 +34,7 @@ The test suite covers safe bootstrap replay, generator determinism, exact record
 ### Portfolio visual finish — 27 October 2026
 
 Updated the dashboard palette and README screenshots to match the author's portfolio. The complete PostgreSQL 18 / Java 17 suite passed again: **38 passed in 29.06s**. Chromium captured the rendered Overview and Alert explorer and checked the guide page. No live Snowflake or Looker Studio validation was performed. The portfolio case study links to the runnable local interface and its setup instructions.
+
+### Guided dashboard and typography — 27 October 2026
+
+The interface now introduces the AML purpose, uses plain-language patterns and review prompts, and keeps technical records in expandable sections. Nine dashboard interaction tests pass. Chromium verified the bundled Inter font loaded at heading weight 650, no phone-width horizontal overflow, and the rendered overview, alert explanation and guide pages. Data calculations and detection rules are unchanged.

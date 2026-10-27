@@ -4,8 +4,16 @@ primaryColor = "#d2f783"
 backgroundColor = "#101411"
 secondaryBackgroundColor = "#171d18"
 textColor = "#f3f5ec"
-font = "sans serif"
+font = "Inter, sans-serif"
+headingFont = "Inter, sans-serif"
+baseFontSize = 16
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/Inter.ttf"
+weight = "100 900"
+style = "normal"
 [server]
+enableStaticServing = true
 address = "127.0.0.1"
 headless = true
 [browser]
