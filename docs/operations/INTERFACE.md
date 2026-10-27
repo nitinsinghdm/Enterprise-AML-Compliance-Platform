@@ -4,10 +4,10 @@
 
 1. Install `requirements-dashboard.txt` and run `streamlit run dashboard_app.py` from the repository root.
 2. Open http://localhost:8501. Select **Bundled preview** to explore without PostgreSQL.
-3. On **Overview**, examine the payment-volume spike and the rule counts. Expand Filter activity and change country/channel/date; the four activity metrics and two activity charts update. Monitoring signals deliberately remain whole-snapshot counts and are labeled that way.
-4. Open **Alert explorer**, select a rule and inspect an individual alert. Read its explanation and the associated customer behavior features. No case-management decision is saved.
-5. Open **Customer risk**, choose holdout and examine the 25 unseen customers in the preview. Scores on training rows are not evaluation evidence.
-6. Open **Pipeline & guide** to read how the original schema connects to the new work. Inspect the actual load batches and SQL check results captured at export time.
+3. On **Payment overview**, examine the payment-volume spike and the rule counts. Expand Filter activity and change country/channel/date; the four activity metrics and two activity charts update. Monitoring signals deliberately remain whole-snapshot counts and are labeled that way.
+4. Open **What needs a closer look**, select a rule and inspect an individual alert. Read its explanation and the associated customer behavior features. No case-management decision is saved.
+5. Open **Customer scores**, choose holdout and examine the 25 unseen customers in the preview. Scores on training rows are not evaluation evidence.
+6. Open **How this demo works** to read how the original schema connects to the new work. Inspect the actual load batches and SQL check results captured at export time.
 
 ## See your own run
 
@@ -46,3 +46,7 @@ The screenshot script saves the Overview and Alert explorer pages to `images/`. 
 ## Portfolio visual language
 
 The interface uses the portfolio’s forest background (`#101411`), raised green surfaces (`#171d18`), lime accents (`#d2f783`), and rounded metric cards. Navigation retains native keyboard controls and a visible focus outline. The sidebar links to the public project walkthrough; no dataset is sent to the portfolio.
+
+Typography uses the portfolio’s Inter variable font, bundled locally under its SIL Open Font License in `static/fonts/`. Headings use weight 650, body copy uses comfortable line spacing, and metrics use tabular numerals. Charts use the same font and readable rule names. Only public font assets belong in `static/`; never put exports or secrets there.
+
+The guided layout introduces the purpose before the charts: what happened, why a pattern was flagged, and what a person could check next. Plain-language pattern names appear in the interface; exports retain stable technical field names. Raw customer records and model diagnostics sit inside expandable sections.

@@ -23,10 +23,10 @@ The **NorthStar AML Observatory** makes the pipeline visible, with a forest-gree
 
 | View | What you can see | What you can do |
 |---|---|---|
-| **Overview** | Payment volume, completion rate, destination countries, monitoring signals | Filter date/country/channel; download the filtered daily dataset |
-| **Alert explorer** | Account/day/rule alert groups and the reason behind each signal | Filter rules; inspect an alert and its customer behavior; download evidence groups |
-| **Customer risk** | Score distribution, risk bands and model feature importance | Compare training and holdout customers; inspect evaluation metrics |
-| **Pipeline & guide** | Recorded loads, rejected-row counts, SQL checks and stage explanations | Learn the workflow and copy the commands to run your own data |
+| **Payment overview** | Payment volume, completion rate, destination countries, monitoring signals | Filter date/country/channel; download the filtered daily dataset |
+| **What needs a closer look** | Account/day/rule alert groups and the reason behind each signal | Filter rules; inspect an alert and its customer behavior; download evidence groups |
+| **Customer scores** | Score distribution, risk bands and model feature importance | Compare training and holdout customers; inspect evaluation metrics |
+| **How this demo works** | Recorded loads, rejected-row counts, SQL checks and stage explanations | Learn the workflow and copy the commands to run your own data |
 
 ## ▶️ Run the interface
 
@@ -52,7 +52,7 @@ python -m aml export
 python -m aml train
 ```
 
-Then select **My local exports → Reload snapshot** in the sidebar. Reload rereads files; it does not start jobs. Watch the terminal for command progress, and use **Pipeline & guide** to inspect the exported load history and quality results. The interface is read-only and listens on localhost.
+Then select **My local exports → Reload snapshot** in the sidebar. Reload rereads files; it does not start jobs. Watch the terminal for command progress, and use **How this demo works** to inspect the exported load history and quality results. The interface is read-only and listens on localhost.
 
 ## 🔎 From an alert to its evidence
 
