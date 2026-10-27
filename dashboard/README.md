@@ -1,5 +1,7 @@
 # Looker Studio dashboard setup
 
+For the local interactive interface, see the [main README](../README.md) and [interface guide](../docs/operations/INTERFACE.md). This document covers the optional Google report.
+
 The deliverable is a compatible dataset and reproducible setup, not a published Google report. No Google credentials are needed to produce CSVs. Use synthetic data only for this demo.
 
 1. Run `python -m aml export` followed by `python -m aml train`.

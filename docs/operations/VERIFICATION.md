@@ -22,3 +22,11 @@ The test suite covers safe bootstrap replay, generator determinism, exact record
 - Docker Compose is provided; this machine had no Docker executable, so database tests used a separate native PostgreSQL instance. CI specifies PostgreSQL 17 and Java 17; its remote result must be checked on the pull request.
 - No production sanctions screening, case management, regulatory filing or real-customer validation is included.
 - Original schema, seed files and generator logic were retained. Only legacy database connection configuration changed. Existing CSV snapshots and OS metadata were removed from the new branch's tracked tree; original history remains available.
+
+## Interface update — 2026-10-27
+
+- Full local suite: **38 passed** in 26.15 seconds, including all existing PostgreSQL/Spark checks and nine new dashboard tests.
+- Streamlit interaction tests cover all four pages without a database, activity filters, empty selections, holdout filtering, bundled-preview totals, missing exports and checksum mismatch.
+- Chromium browser verification exercised the running Overview, Alert explorer and Pipeline & guide pages. README PNGs are actual captures of the bundled synthetic preview.
+- The exporter now includes four recorded ingestion batches and eight SQL audit results in the saved demo snapshot. The approximately 65 KB preview contains summary rows only.
+- No cloud deployment, live bank feed, background job scheduler or hosted dashboard is claimed. The local interface reads bundled data or the latest exported files.

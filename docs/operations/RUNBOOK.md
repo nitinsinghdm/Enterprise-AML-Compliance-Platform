@@ -48,7 +48,7 @@ Alerts are account/day/rule groups and can overlap. Repeated execution reads the
 
 ## Export and ML
 
-Export uses a read-only REPEATABLE READ database transaction. The manifest records row counts, checksums and UTC export time. Keep the four CSVs together as a snapshot. The exporter streams rows, while generation/modeling and the warehouse CSV loader are intended for data that fits local memory.
+Export uses a read-only REPEATABLE READ database transaction. The manifest records row counts, checksums and UTC export time. Keep the exported CSVs together as a snapshot, including pipeline_batches.csv and quality_checks.csv. The exporter streams rows, while generation/modeling and the warehouse CSV loader are intended for data that fits local memory.
 
 ML uses numeric customer behavior features and PEP indicator, with an explicit feature allowlist excluding IDs, scenario labels and alerts. The target is whether the customer has any injected scenario. One feature row per customer and a stratified customer split prevent the same customer appearing in both training and holdout. No temporal generalization test is claimed. The model is not refit on the holdout before reporting metrics. Scores for training customers are marked `train`; holdout scores are marked `holdout`.
 
