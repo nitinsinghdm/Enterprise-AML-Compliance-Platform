@@ -47,3 +47,11 @@ The interface now introduces the AML purpose, uses plain-language patterns and r
 - Chromium acceptance covers totals, all four patterns, individual transaction inspection, status/account filtering, daily replay, CSV export, pagination, keyboard controls, and a 390px mobile viewport.
 - The browser workflow is included in GitHub Actions. Local and CI tests do not establish real-world detection accuracy or production bank readiness.
 - No real banking credentials, customer data or live bank connection used. Snowflake and Looker Studio cloud acceptance remains unchanged.
+
+### Expanded event-time replay — 28 October 2026
+
+- Complete local PostgreSQL 18 / Java 17 / Spark suite: **45 passed in 101.99s**.
+- Reproducible isolated fixture: **250 accounts, 10,281 transactions, 74 final alert groups and 127 evidence versions**. Public JSON is approximately 2.38 MB; no bulk CSVs or secrets are committed.
+- New tests prove no alert version references future payments and reconcile representative event-time SQL prefixes to exported counts and amounts. Final versions match the authoritative SQL groups.
+- Chromium acceptance passed for all four exact first-trigger boundaries, guided replay, next payment, UTC jump, normal body casing/uppercase headings, filters, CSV export, evidence, keyboard controls and 390px mobile layout. README captures show the actual rendered interface.
+- Simulated event time is not processing latency. No real bank connection, representative-data validation or production readiness claim is made.
