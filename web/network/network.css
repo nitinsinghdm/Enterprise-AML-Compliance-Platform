@@ -8,3 +8,7 @@
 
 .transaction-link{border:0;background:transparent;padding:0;text-decoration:underline;text-underline-offset:3px;font:inherit}.transaction-link:hover{background:transparent;color:#fff}
 .alert-card[aria-pressed=true]{color:var(--text)}
+
+/* Interface copy uses Title Case; headings and structural labels use capitals. */
+body,button,select,option,input{ text-transform:capitalize }
+h1,h2,h3,h4,th,.eyebrow,.small-index,.canvas-label,.timeline label,.brand,.tag,.recorded,footer{ text-transform:uppercase }
