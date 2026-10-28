@@ -9,6 +9,18 @@
 .transaction-link{border:0;background:transparent;padding:0;text-decoration:underline;text-underline-offset:3px;font:inherit}.transaction-link:hover{background:transparent;color:#fff}
 .alert-card[aria-pressed=true]{color:var(--text)}
 
-/* Interface copy uses Title Case; headings and structural labels use capitals. */
-body,button,select,option,input{ text-transform:capitalize }
+/* Quiet body copy; digital numerals and restrained uppercase headings. */
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.ttf) format('truetype');font-weight:400;font-display:swap}
+:root{--mono:PlexMono,'SFMono-Regular',Consolas,monospace}
+body,button,select,option,input{ text-transform:none }
 h1,h2,h3,h4,th,.eyebrow,.small-index,.canvas-label,.timeline label,.brand,.tag,.recorded,footer{ text-transform:uppercase }
+body{font-weight:400;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1{font-weight:500;letter-spacing:-.045em;font-size:clamp(32px,3.3vw,54px)}
+h2,h3{font-weight:550;letter-spacing:.015em}
+.metrics strong{letter-spacing:-.04em;font-weight:400}
+.lede{max-width:630px;font-size:15px;line-height:1.7}
+.legend>div,.note,.panel-heading p{font-size:11px}
+.intro-actions{display:flex;align-items:center;gap:14px;margin-top:20px}.intro-actions button{background:#eceef1;color:#121315;font-size:12px;font-weight:550}.intro-actions span{font:10px var(--mono);color:var(--muted)}
+.replay-controls{display:flex;gap:12px;align-items:flex-end;padding:0 20px 14px}.replay-controls label{flex:1;min-width:0;font-size:10px;color:var(--muted)}.replay-controls input,.replay-controls select{display:block;margin-top:6px;width:100%;border:1px solid var(--line);background:var(--raised);color:var(--text);padding:8px;border-radius:6px;font:10px var(--mono)}.replay-controls button{font-size:10px}
+.stream-status{display:flex;justify-content:space-between;gap:12px;padding:0 20px 12px;font:9px/1.5 var(--mono);color:var(--muted)}#replay-state{color:#d6dae1}#alert-announcement:not(:empty){color:var(--amber);border-left:2px solid var(--amber);margin:0 20px 12px;padding:4px 10px}.alert-card[aria-pressed=true]{color:var(--text)}
+@media(max-width:650px){.intro-actions{flex-wrap:wrap}.replay-controls{flex-wrap:wrap;padding-inline:12px}.replay-controls label{flex-basis:45%}.stream-status{flex-direction:column;padding-inline:12px}.timeline label{flex-wrap:wrap}.metrics strong{font-size:20px}.canvas-wrap{height:400px}}

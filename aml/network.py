@@ -67,6 +67,7 @@ def build_snapshot(conn) -> dict:
     beneficiaries = {key: f'EX-{n:03}' for n, key in enumerate(sorted({str(r['beneficiary_id']) for r in rows if r['beneficiary_id']}), 1)}
     transactions = {str(r['transaction_id']): f'TX-{n:05}' for n, r in enumerate(rows, 1)}
     output_alerts = []
+    alert_events = []
     for alert in alerts:
         account = str(alert['account_id'])
         counted, support, count = evidence_for(grouped[account], alert['rule_code'], alert['transaction_date'])
@@ -78,7 +79,31 @@ def build_snapshot(conn) -> dict:
             account=accounts[account], day=alert['transaction_date'].isoformat(), rule=alert['rule_code'],
             amount=float(amount), count=count, evidence=[transactions[str(r['transaction_id'])] for r in support],
             counted=[transactions[str(r['transaction_id'])] for r in counted], version=VERSION))
-    return dict(schema_version=1, rules_version=VERSION, synthetic=True,
+        # Reveal each version only when its evidence has occurred. Equal timestamps
+        # are processed together, preserving SQL RANGE semantics for simultaneous rows.
+        prior_signature = None
+        first_detected = None
+        for at in sorted({r['transaction_timestamp'] for r in grouped[account]
+                          if r['transaction_date'] == alert['transaction_date'] and r['transaction_status'] == 'COMPLETED'}):
+            prefix = [r for r in grouped[account] if r['transaction_timestamp'] <= at]
+            event_counted, event_support, event_count = evidence_for(prefix, alert['rule_code'], alert['transaction_date'])
+            event_amount = sum((r['amount_eur'] for r in event_counted), Decimal(0))
+            if not event_counted or (alert['rule_code'] == 'STRUCTURING' and (event_count < 3 or event_amount < 24000)):
+                continue
+            signature = (tuple(str(r['transaction_id']) for r in event_counted),
+                         tuple(str(r['transaction_id']) for r in event_support), event_count)
+            if signature == prior_signature:
+                continue
+            prior_signature = signature
+            first_detected = first_detected or at.isoformat()+'Z'
+            event = dict(output_alerts[-1])
+            event.update(timestamp=at.isoformat()+'Z', first_detected=first_detected,
+                amount=float(event_amount), count=event_count,
+                evidence=[transactions[str(r['transaction_id'])] for r in event_support],
+                counted=[transactions[str(r['transaction_id'])] for r in event_counted])
+            alert_events.append(event)
+
+    return dict(schema_version=2, rules_version=VERSION, synthetic=True,
         provenance='NorthStar synthetic banking records. Account and beneficiary labels are local snapshot aliases, not real identities. Not live banking.',
         accounts=[dict(id=accounts[key], customer=customers[str(grouped[key][0]['customer_id'])]) for key in sorted(grouped)],
         transactions=[dict(id=transactions[str(r['transaction_id'])], account=accounts[str(r['account_id'])],
@@ -86,7 +111,7 @@ def build_snapshot(conn) -> dict:
             timestamp=r['transaction_timestamp'].isoformat()+'Z', day=r['transaction_date'].isoformat(),
             amount=float(r['amount_eur']), direction=r['transaction_direction'], kind=r['transaction_type_name'],
             country=r['destination_country'], status=r['transaction_status'], channel=r['channel']) for r in rows],
-        alerts=output_alerts)
+        alerts=output_alerts, alert_events=sorted(alert_events, key=lambda event: (event['timestamp'], event['id'])))
 
 
 def write_snapshot(conn, path: Path, *, synthetic_data_confirmed: bool = False) -> dict:

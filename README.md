@@ -1,56 +1,81 @@
-# 🏦 Enterprise AML Compliance Platform
+# ENTERPRISE AML COMPLIANCE PLATFORM
 
-**Follow the money. Understand the signals.**
+**Trace the payment. Explain the alert.**
 
-An end-to-end synthetic banking analytics project: generate payments, validate records, detect unusual behavior, score customer risk, and explore the evidence through an interactive interface.
+NorthStar is a synthetic banking project that shows how transaction records become explainable anti-money laundering (AML) alerts. Follow payments between recorded accounts and beneficiaries, watch a suspicious pattern develop, and inspect the evidence behind each flag.
 
-[![Pipeline checks](https://github.com/nitinsinghdm/Enterprise-AML-Compliance-Platform/actions/workflows/test.yml/badge.svg)](https://github.com/nitinsinghdm/Enterprise-AML-Compliance-Platform/actions/workflows/test.yml)
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17%20%7C%2018-4169E1?logo=postgresql&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Interface-Streamlit-FF4B4B?logo=streamlit&logoColor=white)
+**[Open the transaction network →](https://nitinsinghdm.github.io/aml-network/)** · [Portfolio case study](https://nitinsinghdm.github.io/aml.html) · [Full setup](docs/operations/SETUP.md)
 
-[Open the public network demo](https://nitinsinghdm.github.io/aml-network/) · [Run local analytics](#-run-the-interface) · [How it works](#-how-the-project-works) · [Full setup](docs/operations/SETUP.md) · [Verification](docs/operations/VERIFICATION.md)
+![NorthStar transaction network with timestamped replay and AML alerts](images/network-overview.png)
 
-## ◉ Public transaction network
+## TRY IT IN THREE STEPS
 
-**[Open NorthStar Transaction Intelligence →](https://nitinsinghdm.github.io/aml-network/)**
+1. Select **Watch an alert form**. The view focuses on one synthetic account and replays its payments.
+2. Watch the UTC clock. A payment burst raises an alert when the rule's threshold is reached.
+3. Select the alert. Read why it appeared and inspect the exact payments counted by the rule.
 
-No installation or account required. Follow account connections, replay recorded days,
-filter activity patterns, and select an alert to inspect the exact payments behind it.
-The black-and-white interface uses restrained signal colours, digital transaction
-labels, and an evidence ledger with downloadable filtered records.
+Use **Next payment** to skip quiet periods, jump to an exact UTC second, or replay one second, minute or hour per tick. Filter the last hour or 24 hours to examine a smaller slice of activity.
 
-![NorthStar transaction network with account connections and AML signal colours](images/network-overview.png)
+This is **simulated event-time replay**, not a live bank connection. Alerts use only evidence available at the displayed time. A flag means “review this pattern,” not “this is a crime.”
 
-- **Account network:** actual synthetic bank-account/beneficiary relationships; unresolved counterparties remain explicitly unknown.
-- **Transaction inspection:** select an individual payment point or ledger ID to see its details and related flags.
-- **Evidence-linked alerts:** four existing SQL rules; every exported alert count and amount reconciles with PostgreSQL.
-- **Recorded-day replay:** cumulative UTC-day snapshots, not a live feed or real-time detection claim.
-- **Public synthetic fixture:** 2,110 payments, 100 bank accounts, 30 daily alert groups. Completed payments are shown by default.
+## WHAT THE NETWORK SHOWS
 
-[Network methodology, local setup and limitations](docs/operations/NETWORK.md).
-This research demo does not identify criminals, block payments or claim bank production readiness.
+| On screen | Meaning |
+|---|---|
+| Solid account points | Synthetic bank accounts |
+| Hollow points | Recorded external beneficiaries |
+| Diamonds | Unidentified counterparties; no shared identity is assumed |
+| Lines and payment points | Recorded payment connections and individual transactions |
+| Coloured signals | The type of AML pattern, not a verdict or severity rating |
+| Evidence ledger | Payments behind the selected alert, with counted and contextual rows separated |
 
-## 📊 Interactive dashboard
+The public fixture contains **10,281 transactions across 250 accounts**, with **74 account/day/rule alert groups** over the complete period. Completed payments are shown by default; failed and pending records remain inspectable. Counts change with your filters and replay time.
 
-The **NorthStar AML Observatory** makes the pipeline visible, with a forest-green and lime interface inspired by [my portfolio](https://nitinsinghdm.github.io/aml.html). Explore activity, inspect alert evidence, compare customer scores, and trace the data through each processing stage.
+![Selected AML alert and its supporting payment evidence](images/network-evidence.png)
 
-![NorthStar AML dashboard showing payment activity, destination countries and monitoring signals](images/dashboard-overview.png)
+## FOUR PATTERNS TO INVESTIGATE
 
-*Actual screenshot of the local interface using the bundled synthetic preview. This is a saved snapshot, not a live bank feed or a hosted public service.*
+| Pattern | What triggers a review |
+|---|---|
+| Repeated cash deposits | Several near-threshold deposits accumulate on one account |
+| Payment burst | At least 10 completed payments within a trailing hour |
+| Rapid money movement | Funds leave soon after a similarly sized incoming payment |
+| Higher-risk corridor | A large cross-border payment involves a higher-rated fixture country |
 
-### How to read the interface
+Exact rules appear in the interface and in [SQL](sql/analytics/01_monitoring.sql). Thresholds and country ratings are demonstration assumptions. Alert amounts can overlap across rules and must not be summed as unique suspicious volume.
 
-| View | What you can see | What you can do |
-|---|---|---|
-| **Payment overview** | Payment volume, completion rate, destination countries, monitoring signals | Filter date/country/channel; download the filtered daily dataset |
-| **What needs a closer look** | Account/day/rule alert groups and the reason behind each signal | Filter rules; inspect an alert and its customer behavior; download evidence groups |
-| **Customer scores** | Score distribution, risk bands and model feature importance | Compare training and holdout customers; inspect evaluation metrics |
-| **How this demo works** | Recorded loads, rejected-row counts, SQL checks and stage explanations | Learn the workflow and copy the commands to run your own data |
+## HOW IT WORKS
 
-## ▶️ Run the interface
+![Synthetic banking pipeline architecture](images/pipeline.svg)
 
-From the repository folder, using Python 3.12:
+**Generate → Validate → Monitor → Explain**
+
+Python produces repeatable synthetic activity. PostgreSQL validates and ingests accepted records, tracks rejected rows and prevents duplicate loads. SQL identifies monitoring patterns. The browser links those patterns to payment evidence; the local analytics dashboard explores summaries and customer risk scores.
+
+The original banking schemas, reference data and master-data generators are preserved.
+
+| Component | What is available |
+|---|---|
+| PostgreSQL and Python | Reproducible generation, staging-to-core ingestion, quality checks and audited exports |
+| Public browser interface | Transaction graph, second-resolution replay, point-in-time alerts, evidence and CSV export |
+| Streamlit analytics | Local payment overview, alert exploration, customer scores and pipeline status |
+| Risk-scoring ML | Synthetic customer classification with a separate holdout evaluation; real-world accuracy is unvalidated |
+| PySpark | Typed silver/gold Parquet processing and reconciliation tests |
+| Snowflake | Environment-configured warehouse loader; your account and live acceptance checks are required |
+| Looker Studio | Compatible datasets and a setup guide; report publishing requires your account |
+| GitHub Actions | Database, Spark, interface and browser checks; required integration check protects main |
+
+## RUN IT LOCALLY
+
+The browser interface needs only Python to serve its bundled synthetic data:
+
+```sh
+python -m http.server 8766 --bind 127.0.0.1 --directory web/network
+```
+
+Open **http://127.0.0.1:8766**. No database, login or cloud credentials are needed for this preview.
+
+For the local analytics dashboard, use Python 3.12:
 
 ```sh
 python3.12 -m venv .venv
@@ -59,102 +84,50 @@ pip install -r requirements-dashboard.txt
 streamlit run dashboard_app.py
 ```
 
-After starting Streamlit, open **[http://localhost:8501](http://localhost:8501)** on that same computer. This local address is not the public demo. On Windows, activate with `.venv\Scripts\activate`.
+Open **http://localhost:8501**. On Windows, activate with `.venv\Scripts\activate`. Its bundled summary/model preview is a separate, smaller 100-customer dataset, not the expanded browser fixture.
 
-**No database or cloud account is needed for the bundled preview.** It contains a small, synthetic summary snapshot—no customer names, IBANs or raw transaction CSVs. The source and export time are displayed on every page.
-
-To view your own pipeline results, complete the [database setup](docs/operations/SETUP.md), run:
+To run the full pipeline, follow the [database and dependency setup](docs/operations/SETUP.md), then:
 
 ```sh
-python -m aml demo --customers 200 --per-account 30
+python -m aml demo --customers 250 --per-account 40
 python -m aml validate
 python -m aml export
 python -m aml train
 ```
 
-Then select **My local exports → Reload snapshot** in the sidebar. Reload rereads files; it does not start jobs. Watch the terminal for command progress, and use **How this demo works** to inspect the exported load history and quality results. The interface is read-only and listens on localhost.
+[Network fixture reproduction](docs/operations/NETWORK.md) uses an isolated temporary database and adds deterministic seconds to timestamps for replay. Generated bulk CSVs and secrets stay out of Git.
 
-## 🔎 From an alert to its evidence
+## POTENTIAL VALUE FOR A BANK
 
-![Alert explorer showing rule filters, flagged customers and an explanation of a selected alert](images/alert-explorer.png)
+The product hypothesis is **less time spent reconstructing why an alert appeared**. Each flag connects a versioned rule, its trigger time, the account and the exact payment evidence. Unknown counterparties remain explicit, and reviewers can distinguish counted payments from supporting context.
 
-Four deliberately embedded behaviors make the monitoring workflow testable:
+This is a proposed value proposition, not a proven market advantage. A bank pilot would need to measure analyst review time, false-positive workload and detection quality on representative data. Synthetic results cannot establish production readiness.
 
-| Scenario | Signal | Why it is useful to investigate |
-|---|---|---|
-| **Structuring** | Repeated near-threshold incoming cash deposits | Individually moderate payments can form a larger pattern |
-| **Velocity** | At least 10 completed payments within a trailing hour | A short burst may differ from normal account activity |
-| **High-risk corridor** | Large cross-border payments to high-rated fixture countries | Amount and destination can jointly indicate a review priority |
-| **Rapid movement** | Incoming funds followed quickly by a similarly sized outgoing payment | Funds may be passing through an account unusually quickly |
+The current demo does not provide live bank ingestion, production access controls, tenant isolation or shared case management. It does not block payments. Broader cybersecurity and the separate SentinelPay product are future work.
 
-These are educational rules and review candidates—not legal thresholds or findings of crime. Alert amounts can overlap across rules; summing them does not give unique suspicious volume.
-
-### What the preview demonstrates
-
-- **2,110 transactions** across **100 synthetic customers**, including 110 intentionally embedded scenario transactions.
-- **30 alert groups** in the saved demonstration snapshot; a group represents an account, date and rule, not a single transaction.
-- **Eight SQL quality checks**, with zero violations in that snapshot.
-- Separate **75-customer training / 25-customer holdout** evaluation. High synthetic scores do not establish real-world AML accuracy.
-
-## 🏗️ How the project works
-
-![Architecture showing synthetic activity, staging validation, monitoring rules and the dashboard](images/pipeline.svg)
-
-1. **Generate banking activity.** Python creates customers, accounts, beneficiaries and payments, with reproducible scenarios mixed into normal-looking activity.
-2. **Check each record.** PostgreSQL validates types, references and business rules. Accepted records enter core tables; rejected rows retain an audit trail. Replaying identical data does not duplicate it.
-3. **Find patterns.** SQL produces monitoring alerts and customer behavior features. A classifier learns the synthetic patterns and produces risk scores.
-4. **Make the results visible.** Consistent exports feed this local interface, Spark Parquet processing, optional Snowflake warehouse loading, and a documented Looker Studio report.
-
-### What was built on top of the original project
-
-The original PostgreSQL schema, reference seeds, master-data generators and design documents were preserved. The added implementation completes transaction generation, audited ingestion, analytics, model training/inference, Spark transformations, warehouse loading, automated checks—and now a visual interface.
-
-## 🛠️ Technology and delivery status
-
-| Component | Role | Current status |
-|---|---|---|
-| PostgreSQL + SQL | Banking model, validation, audit trail, monitoring queries | Implemented and integration-tested |
-| Python | Generation, ingestion, consistent exports and CLI | Runnable locally |
-| Browser network | Public synthetic transaction graph and evidence inspection | Runnable without installation; hosted on GitHub Pages |
-| Streamlit + Plotly | Interactive exploration and pipeline explanations | Runnable with bundled preview or local exports |
-| scikit-learn | Synthetic customer risk classification | Trained/evaluated locally; not production-validated |
-| PySpark | Typed silver/gold Parquet processing | Executed and reconciled with SQL |
-| Snowflake | Fact/feature/mart tables and transactional MERGE loads | Implemented; live account validation still required |
-| Looker Studio | Shareable executive reporting | Datasets and setup guide supplied; report not published |
-| GitHub Actions | PostgreSQL, Spark and dashboard tests | Required integration check protects main |
-
-## 🧪 Reproducibility and checks
+## VERIFY AND EXPLORE
 
 ```sh
 pip install -r requirements-dev.txt -r requirements-dashboard.txt
 python -m pytest -q
 ```
 
-Without a test database, integration tests explicitly skip. The [full setup guide](docs/operations/SETUP.md#tests) explains PostgreSQL and Spark testing. CI runs the database and Spark checks plus the dashboard interactions. The dashboard also verifies available export checksums and warns when model scores predate the database snapshot.
+Database and Spark tests require the configuration in the [testing guide](docs/operations/SETUP.md#tests); unavailable integration dependencies are explicitly skipped. Browser checks cover filters, exact alert trigger times, evidence, export, replay and mobile layout.
 
-[Read the verification record](docs/operations/VERIFICATION.md) for tested scope and limits.
-
-## 📂 Explore the repository
+- [Network meaning, replay contracts and browser checks](docs/operations/NETWORK.md)
+- [Verification record](docs/operations/VERIFICATION.md)
+- [Pipeline operations and recovery](docs/operations/RUNBOOK.md)
+- [Snowflake configuration](docs/operations/SNOWFLAKE.md)
+- [Looker Studio setup](dashboard/README.md)
+- [Original database design](docs/database/Database-Design.md)
 
 ```text
-aml/                    Generation, ingestion, analytics export, ML, Spark, Snowflake
-sql/                    Preserved banking schema + monitoring and validation queries
-dashboard_app.py        Interactive NorthStar observatory
-dashboard/preview/      Small synthetic summary preview, no database required
-images/                 Real interface screenshots and architecture diagram
-tests/                  Data integrity, reconciliation, model and interface tests
-docs/operations/        Setup, runbook, cloud configuration and verification
+aml/                 Pipeline, model, Spark, warehouse and network export
+sql/                 Banking schema, validation and monitoring rules
+web/network/         Public browser interface and synthetic fixture
+dashboard_app.py     Local Streamlit analytics interface
+tests/               Data integrity, reconciliation and interface tests
+docs/operations/     Setup, operational contracts and verification
 ```
 
-- [Detailed setup and commands](docs/operations/SETUP.md)
-- [Pipeline contracts and recovery](docs/operations/RUNBOOK.md)
-- [Snowflake configuration and acceptance](docs/operations/SNOWFLAKE.md)
-- [Looker Studio report setup](dashboard/README.md)
-- [Original database design](docs/database/Database-Design.md)
-- [Interface guide and screenshot reproduction](docs/operations/INTERFACE.md)
-
-## 👤 Author
-
-**Nitin Singh** · Data Analytics & Data Engineering
-
-*Portfolio research project using synthetic data. Country ratings and exchange rates are demonstration fixtures; the system is not a production compliance decision service.*
+**Nitin Singh** · Data Analytics & Data Engineering · [Portfolio](https://nitinsinghdm.github.io/)
