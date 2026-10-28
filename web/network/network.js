@@ -122,7 +122,7 @@ function draw(){
    if(n.signals.size){ctx.beginPath();ctx.arc(p.x,p.y,r+4,0,Math.PI*2);ctx.strokeStyle=color;ctx.globalAlpha=.4;ctx.lineWidth=1;ctx.stroke();ctx.globalAlpha=1;}
    ctx.beginPath();if(n.kind==='unknown'){ctx.moveTo(p.x,p.y-r);ctx.lineTo(p.x+r,p.y);ctx.lineTo(p.x,p.y+r);ctx.lineTo(p.x-r,p.y);ctx.closePath();}else ctx.arc(p.x,p.y,r,0,Math.PI*2);
    ctx.fillStyle=n.kind==='bank'?color:'#0e1012';ctx.strokeStyle=color;ctx.lineWidth=1;ctx.fill();ctx.stroke();
-   if($('account').value||zoom>2.2){ctx.font='10px monospace';ctx.fillStyle='#c3c7cf';ctx.textAlign='center';let label=n.kind==='unknown'?(n.id.startsWith('UN-IN')?'Unidentified sources':'Unidentified recipients'):n.id;ctx.fillText(label,p.x,Math.min(h-35,p.y+22));}
+   if($('account').value||zoom>2.2){ctx.font='10px monospace';ctx.fillStyle='#c3c7cf';ctx.textAlign='center';let label=n.kind==='unknown'?(n.id.startsWith('UN-IN')?'Unidentified Sources':'Unidentified Recipients'):n.id;ctx.fillText(label,p.x,Math.min(h-35,p.y+22));}
  }
 }
 function resize(){const rect=canvas.getBoundingClientRect();w=rect.width;h=rect.height;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);draw();}
