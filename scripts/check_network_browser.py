@@ -1,6 +1,7 @@
 """Browser acceptance for the static network. Start `python -m http.server 8766` in web/network."""
 import json
 import os
+import tempfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -61,7 +62,7 @@ with sync_playwright() as p:
     assert mobile.evaluate('document.documentElement.scrollWidth <= innerWidth')
     mobile.select_option('#pattern','RAPID_MOVEMENT');mobile.locator('.alert-card').first.click()
     assert mobile.locator('#inspector h3').inner_text()=='Rapid money movement'
-    mobile.screenshot(path='/private/tmp/northstar-mobile.png',full_page=True)
+    mobile.screenshot(path=str(Path(tempfile.gettempdir())/'northstar-mobile.png'),full_page=True)
     assert not errors,errors
     browser.close()
 print('Network browser acceptance passed: totals, filters, evidence, replay, export, pagination, keyboard and mobile.')
