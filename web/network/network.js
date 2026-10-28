@@ -1,10 +1,10 @@
 'use strict';
 const $ = id => document.getElementById(id);
 const RULES = {
-  STRUCTURING: {name:'Repeated cash deposits',color:'#e0b777',why:'Several cash deposits add up to a larger amount.',rule:'At least 3 incoming cash deposits of €8,000 to under €10,000 on one account/day, totaling at least €24,000.',next:'Check the source of funds and whether there is a reasonable explanation for splitting the deposits.'},
-  VELOCITY: {name:'Payment burst',color:'#b7a0eb',why:'Many completed payments happened within a short time.',rule:'At least 10 completed payments within a trailing hour, including both endpoints. The flag count is the peak window count; the amount includes triggering rows only.',next:'Compare with normal account activity and check the purpose and recipients of the payments.'},
-  RAPID_MOVEMENT: {name:'Rapid money movement',color:'#83c7cf',why:'Money left soon after a similar amount arrived.',rule:'An outgoing payment of at least €9,000 within one hour after incoming funds, at 80–120% of the incoming amount. Incoming payments are context; the flag amount counts outgoing payments once.',next:'Inspect both sides of the flow: where the incoming funds came from and why the outgoing payment was made.'},
-  HIGH_RISK_CORRIDOR: {name:'Higher-risk corridor',color:'#dc929f',why:'A large cross-border payment involved a higher-risk demo country.',rule:'A completed cross-border payment of at least €10,000 to a HIGH/CRITICAL-rated reference country. Ratings are demonstration fixtures.',next:'Check the purpose, recipient and supporting information. Country rating alone does not establish wrongdoing.'}
+  STRUCTURING: {name:'Repeated Cash Deposits',color:'#e0b777',why:'Several cash deposits add up to a larger amount.',rule:'At least 3 incoming cash deposits of €8,000 to under €10,000 on one account/day, totaling at least €24,000.',next:'Check the source of funds and whether there is a reasonable explanation for splitting the deposits.'},
+  VELOCITY: {name:'Payment Burst',color:'#b7a0eb',why:'Many completed payments happened within a short time.',rule:'At least 10 completed payments within a trailing hour, including both endpoints. The flag count is the peak window count; the amount includes triggering rows only.',next:'Compare with normal account activity and check the purpose and recipients of the payments.'},
+  RAPID_MOVEMENT: {name:'Rapid Money Movement',color:'#83c7cf',why:'Money left soon after a similar amount arrived.',rule:'An outgoing payment of at least €9,000 within one hour after incoming funds, at 80–120% of the incoming amount. Incoming payments are context; the flag amount counts outgoing payments once.',next:'Inspect both sides of the flow: where the incoming funds came from and why the outgoing payment was made.'},
+  HIGH_RISK_CORRIDOR: {name:'Higher-Risk Corridor',color:'#dc929f',why:'A large cross-border payment involved a higher-risk demo country.',rule:'A completed cross-border payment of at least €10,000 to a HIGH/CRITICAL-rated reference country. Ratings are demonstration fixtures.',next:'Check the purpose, recipient and supporting information. Country rating alone does not establish wrongdoing.'}
 };
 const fmt = new Intl.NumberFormat('en-GB');
 const eur = value => new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(value);
@@ -68,22 +68,23 @@ function renderInspector(){
    if(!related.length)panel.append(element('p','No matching flag is not a guarantee that the payment is safe.'));
    for(const a of related){const button=element('button',RULES[a.rule].name,'secondary');button.style.margin='5px 0';button.addEventListener('click',()=>selectAlert(a));panel.append(button);}
    panel.append(element('p',`Recorded country: ${t.country} · channel: ${t.channel}. No inferred location or account ownership.`,'note'));
-   const clear=element('button','Return to all accounts','secondary');clear.style.marginTop='16px';clear.addEventListener('click',reset);panel.append(clear);return;
+   const clear=element('button','Return to All Accounts','secondary');clear.style.marginTop='16px';clear.addEventListener('click',reset);panel.append(clear);return;
  }
- if(!active){const id=$('account').value;if(id){const account=data.accounts.find(a=>a.id===id);panel.append(element('h3',id),element('p',`Synthetic customer ${account.customer}. Inspect recorded flows, counterparties and review status below.`));const details=element('button','Open account details','secondary');details.addEventListener('click',()=>{$('account-details').scrollIntoView({behavior:'auto'});});panel.append(details);}else panel.append(element('h3','Select an account or flag.'),element('p','Choose an account for its recorded activity and review status, or select an alert for its supporting evidence.'));return;}
+ if(!active){const id=$('account').value;if(id){const account=data.accounts.find(a=>a.id===id);panel.append(element('h3',id),element('p',`Synthetic customer ${account.customer}. Inspect recorded flows, counterparties and review status below.`));const details=element('button','Open Account Details','secondary');details.addEventListener('click',()=>{$('account-details').scrollIntoView({behavior:'auto'});});panel.append(details);}else panel.append(element('h3','Select an account or flag.'),element('p','Choose an account for its recorded activity and review status, or select an alert for its supporting evidence.'));return;}
  const r=RULES[active.rule];panel.style.setProperty('--signal',r.color);
  panel.append(element('h3',r.name),element('p',r.why),element('div',`${active.account} · ${active.timestamp.slice(11,19)} UTC\n${active.evidence.length} supporting payment(s)\n${eur(active.amount)} in counted payments`,'evidence-summary'));
  panel.querySelector('.evidence-summary').style.whiteSpace='pre-line';
  panel.append(element('h4','What a reviewer could check'),element('p',r.next));
  const details=element('details');details.append(element('summary','Exact rule and evidence count'),element('p',r.rule),element('p',`SQL evidence count: ${active.count}. Supporting rows: ${active.evidence.length}. These can differ because supporting rows include context.`));panel.append(details);
  panel.append(element('p',`${active.id}\nRules: ${active.version}\nFirst triggered: ${active.first_detected.replace('T',' ').replace('Z',' UTC')} / review required`,'version'));
- const clear=element('button','Return to all accounts','secondary');clear.style.marginTop='16px';clear.addEventListener('click',reset);panel.append(clear);
+ const clear=element('button','Return to All Accounts','secondary');clear.style.marginTop='16px';clear.addEventListener('click',reset);panel.append(clear);
 }
 function buildGraph(){
  const map=new Map(),edgeMap=new Map(),signalByTx=new Map();
  for(const a of (active?[active]:visibleAlerts))for(const id of a.evidence){if(!signalByTx.has(id))signalByTx.set(id,[]);signalByTx.get(id).push(a.rule);}
  const add=(id,kind,account)=>{if(!map.has(id))map.set(id,{id,kind,account});};
- for(const t of current){
+ const graphRows=current.filter(t=>$('map-mode').value==='all'||signalByTx.has(t.id)||selectedPayment?.id===t.id);
+ for(const t of graphRows){
    add(t.account,'bank',t.account);
    const incoming=t.direction==='INCOMING';
    const other=incoming?`UN-IN-${t.account}`:(t.beneficiary||`UN-OUT-${t.account}`);
@@ -101,7 +102,8 @@ function buildGraph(){
    n.y=focused?(inbound?.3:n.kind==='external'?.44:.72):.1+(hash(n.id+'y')%1000)/1000*.78;
  }
  for(const n of nodes){n.signals=new Set(edges.filter(e=>e.from===n.id||e.to===n.id).flatMap(e=>[...e.signals]));}
- $('graph-empty').hidden=current.length>0;
+ $('graph-empty').hidden=graphRows.length>0;$('graph-empty').textContent=$('map-mode').value==='flagged'?'No flagged connections in this view. Choose All Payments to inspect other records.':'No payments match this view.';
+ $('map-explanation').textContent=$('map-mode').value==='flagged'?`${fmt.format(graphRows.length)} evidence-linked payments shown. Totals and the ledger still include all matching records. Select a pattern or account to isolate its connections.`:`${fmt.format(graphRows.length)} matching payments shown. A path joins recorded endpoints; each small point is a payment. Select an account to reduce the map to its connections.`;
  $('network-caption').textContent=`${banks.length} bank accounts / ${nodes.filter(n=>n.kind==='external').length} identified external beneficiaries / ${nodes.filter(n=>n.kind==='unknown').length} unresolved groups`;
  draw();
 }
@@ -168,13 +170,15 @@ async function start(){try{
  for(const a of data.accounts)option($('account'),a.id,`${a.id} · ${a.customer}`);for(const [code,rule]of Object.entries(RULES))option($('pattern'),code,rule.name);
  $('day').max=(maxTime-minTime)/1000;$('day').value=(maxTime-minTime)/1000;$('jump').min=new Date(minTime).toISOString().slice(0,19);$('jump').max=new Date(maxTime).toISOString().slice(0,19);$('provenance').textContent=`${data.provenance} Rules version: ${data.rules_version}.`;
  $('loading').hidden=true;$('app').hidden=false;
+ $('map-mode').addEventListener('change',buildGraph);
  for(const id of ['account','pattern','status','window'])$(id).addEventListener('change',()=>{window.inspectNetworkNode?.(null);guidedUntil=null;selectedPayment=null;active=null;page=0;zoom=1;pan={x:0,y:0};update();});
  $('day').addEventListener('input',()=>{guidedUntil=null;stop();page=0;update();});$('reset').addEventListener('click',reset);
  $('zoom-in').addEventListener('click',()=>{zoom=Math.min(5,zoom*1.25);draw();});$('zoom-out').addEventListener('click',()=>{zoom=Math.max(.5,zoom/1.25);draw();});$('fit').addEventListener('click',()=>{zoom=1;pan={x:0,y:0};draw();});
  $('previous').addEventListener('click',()=>{page--;renderLedger();});$('next').addEventListener('click',()=>{page++;renderLedger();});$('download').addEventListener('click',download);
  function tick(){if(cursorTime()>=maxTime){stop();return;}$('day').value=Math.min(Number($('day').max),guidedUntil===null?Infinity:(guidedUntil-minTime)/1000,Number($('day').value)+Number($('speed').value));page=0;update();if(guidedUntil!==null&&cursorTime()>=guidedUntil){guidedUntil=null;stop();$('replay-explainer').textContent='The burst has reached 10 completed payments within one hour. Replay paused so you can select the Payment burst alert and inspect the evidence.';}}
- function play(){selectedPayment=null;active=null;playing=true;$('play').textContent='Ⅱ';$('play').setAttribute('aria-label','Pause simulated transactions');if(cursorTime()>=maxTime)$('day').value=0;update();timer=setInterval(tick,1000);}
+ function play(){selectedPayment=null;active=null;playing=true;$('play').textContent='Ⅱ';$('play').setAttribute('aria-label','Pause simulated transactions');if(cursorTime()>=maxTime)$('day').value=0;update();timer=setInterval(tick,1000/Number($('playback-rate').value));}
  $('play').addEventListener('click',()=>playing?stop():play());
+ $('playback-rate').addEventListener('change',()=>{if(playing){clearInterval(timer);timer=setInterval(tick,1000/Number($('playback-rate').value));}});
  $('next-event').addEventListener('click',()=>{guidedUntil=null;stop();const next=data.transactions.find(t=>t._time>cursorTime()&&(!$('account').value||t.account===$('account').value));if(next){$('day').value=(next._time-minTime)/1000;page=0;update();}});
  $('jump').addEventListener('change',()=>{guidedUntil=null;stop();const value=Date.parse($('jump').value+'Z');if(Number.isFinite(value)){$('day').value=(Math.max(minTime,Math.min(maxTime,value))-minTime)/1000;page=0;update();}});
  $('watch-demo').addEventListener('click',()=>{reset();const event=data.alert_events.find(a=>a.rule==='VELOCITY');if(!event)return;const earliest=Math.min(...data.transactions.filter(t=>event.evidence.includes(t.id)).map(t=>t._time));window.setInvestigationView?.('network');guidedUntil=event._time;$('account').value=event.account;$('window').value='ALL';$('day').value=Math.max(0,(earliest-minTime)/1000-1);$('speed').value='60';update();$('workspace').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});play();});

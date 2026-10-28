@@ -20,7 +20,19 @@ with sync_playwright() as p:
     assert page.locator('#payment-count').text_content()==f'{len(completed):,}'
     assert page.locator('#alert-count').text_content()==str(len(fixture['alerts']))
     assert page.locator('#account-count').text_content()==str(len(fixture['accounts']))
-    page.screenshot(path=str(root/'images/network-overview.png'),full_page=False)
+    page.locator('.network-panel').screenshot(path=str(root/'images/network-overview.png'))
+    assert page.locator('.pattern-card').count()==4
+    assert page.locator('#map-mode').input_value()=='flagged'
+    assert 'evidence-linked payments shown' in page.locator('#map-explanation').inner_text()
+    total_before=page.locator('#payment-count').inner_text()
+    page.select_option('#map-mode','all')
+    assert page.locator('#payment-count').inner_text()==total_before
+    assert '250 bank accounts' in page.locator('#network-caption').inner_text()
+    page.locator('#start-review').click()
+    assert page.locator('#account').input_value().startswith('AC-')
+    assert page.locator('#map-mode').input_value()=='flagged'
+    assert page.locator('#ledger-title').text_content()=='Supporting payments for this flag'
+    page.locator('#reset').click()
     page.select_option('#status','ALL')
     assert page.locator('#payment-count').text_content()==f"{len(fixture['transactions']):,}"
     with page.expect_download() as result:
@@ -84,11 +96,42 @@ with sync_playwright() as p:
     page.locator('#reset').click()
     page.locator('#next').click()
     assert 'page 2' in page.locator('#page-count').text_content()
+    # Replay rate scales wall-clock timing while preserving the selected event-time step.
+    from datetime import timedelta, timezone
+    speed_page=browser.new_page()
+    speed_page.goto(url,wait_until='networkidle')
+    speed_page.locator('#app').wait_for(state='visible')
+    speed_page.clock.install()
+    speed_page.clock.pause_at(datetime.now(timezone.utc)+timedelta(seconds=1))
+    for rate, expected in [('0.1',1),('0.5',5),('1',10),('1.5',15),('2',20)]:
+        speed_page.locator('#reset').click()
+        speed_page.locator('#day').fill('0')
+        speed_page.select_option('#speed','1')
+        speed_page.select_option('#playback-rate',rate)
+        speed_page.locator('#play').click()
+        speed_page.clock.run_for(10000)
+        assert int(speed_page.locator('#day').input_value())==expected,(rate,expected)
+        speed_page.locator('#play').click()
+        speed_page.clock.run_for(2000)
+        assert int(speed_page.locator('#day').input_value())==expected
+    speed_page.locator('#day').fill('0')
+    speed_page.select_option('#playback-rate','1')
+    speed_page.locator('#play').click()
+    speed_page.clock.run_for(1000)
+    speed_page.select_option('#playback-rate','2')
+    speed_page.clock.run_for(1000)
+    assert speed_page.locator('#day').input_value()=='3'
+    speed_page.locator('#play').click()
+    assert speed_page.locator('.intro-note strong').inner_text()=='NOT PROOF OF A CRIME.'
+    assert speed_page.locator('[data-view="network"]').inner_text()=='Transaction Network'
+    assert speed_page.locator('label[for="playback-rate"]').inner_text().startswith('Playback Speed')
+    assert speed_page.locator('.metrics').inner_text().find('Payments in View')>=0
+    speed_page.close()
     mobile=browser.new_page(viewport={'width':390,'height':844},reduced_motion='reduce')
     mobile.goto(url,wait_until='networkidle');mobile.locator('#app').wait_for(state='visible')
     assert mobile.evaluate('document.documentElement.scrollWidth <= innerWidth')
     mobile.select_option('#pattern','RAPID_MOVEMENT');mobile.locator('.alert-card').first.click()
-    assert mobile.locator('#inspector h3').text_content()=='Rapid money movement'
+    assert mobile.locator('#inspector h3').text_content()=='Rapid Money Movement'
     mobile.screenshot(path=str(Path(tempfile.gettempdir())/'northstar-mobile.png'),full_page=True)
     assert not errors,errors
     browser.close()

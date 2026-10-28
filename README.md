@@ -14,9 +14,17 @@ NorthStar is a synthetic banking project that shows how transaction records beco
 2. Watch the UTC clock. A payment burst raises an alert when the rule's threshold is reached.
 3. Select the alert. Read why it appeared and inspect the exact payments counted by the rule.
 
-Use **Next payment** to skip quiet periods, jump to an exact UTC second, or replay one second, minute or hour per tick. Filter the last hour or 24 hours to examine a smaller slice of activity.
+Use **Next payment** to skip quiet periods, jump to an exact UTC second, or choose a second, minute or hour per replay step. Playback Speed offers 0.1×, 0.5×, 1.0×, 1.5× and 2×; 1.0× runs one selected step per second. Filter the last hour or 24 hours to examine a smaller slice of activity.
 
 This is **simulated event-time replay**, not a live bank connection. Alerts use only evidence available at the displayed time. A flag means “review this pattern,” not “this is a crime.”
+
+## START AN AML REVIEW
+
+The transaction map has its own full-width section. It starts with **Flagged Connections** to keep attention on payments supporting detected patterns; **All Payments** restores the wider network. Totals and the ledger continue to show all matching records, so the map explicitly states how many evidence-linked payments it draws.
+
+Four pattern cards show alert-group and affected-account counts at the replay time. Choose a pattern, or select **Start an AML Review**, to isolate an account and its evidence. The review order uses the documented demo priority and then the latest evidence update. It is not a probability that money laundering occurred.
+
+This helps a reviewer answer three questions: **Which pattern triggered? Which payments support it? What should I check next?** The SQL rules detect review candidates; determining whether activity is laundering requires verified context and human investigation.
 
 ## WHAT THE NETWORK SHOWS
 
