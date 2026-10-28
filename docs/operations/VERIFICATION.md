@@ -38,3 +38,12 @@ Updated the dashboard palette and README screenshots to match the author's portf
 ### Guided dashboard and typography — 27 October 2026
 
 The interface now introduces the AML purpose, uses plain-language patterns and review prompts, and keeps technical records in expandable sections. Nine dashboard interaction tests pass. Chromium verified the bundled Inter font loaded at heading weight 650, no phone-width horizontal overflow, and the rendered overview, alert explanation and guide pages. Data calculations and detection rules are unchanged.
+
+### Public transaction network — 28 October 2026
+
+- Complete local suite: **43 passed in 15.91s**, including PostgreSQL, Spark, the existing Streamlit interface and new network evidence tests.
+- Reconciled all 30 SQL alert groups against their counted and contextual payment records. The committed 2,110-payment public fixture equals a freshly generated test database snapshot.
+- Tested inclusive one-hour velocity boundaries, simultaneous timestamps, exclusion of failed payments, and rapid-movement support without double counting.
+- Chromium acceptance covers totals, all four patterns, individual transaction inspection, status/account filtering, daily replay, CSV export, pagination, keyboard controls, and a 390px mobile viewport.
+- The browser workflow is included in GitHub Actions. Local and CI tests do not establish real-world detection accuracy or production bank readiness.
+- No real banking credentials, customer data or live bank connection used. Snowflake and Looker Studio cloud acceptance remains unchanged.

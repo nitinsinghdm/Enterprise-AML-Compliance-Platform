@@ -1,0 +1,2 @@
+# Optional browser acceptance checks; not needed by the static public demo.
+playwright==1.55.0
