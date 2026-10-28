@@ -9,7 +9,27 @@ An end-to-end synthetic banking analytics project: generate payments, validate r
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17%20%7C%2018-4169E1?logo=postgresql&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Interface-Streamlit-FF4B4B?logo=streamlit&logoColor=white)
 
-[Open the interface](#-run-the-interface) · [How it works](#-how-the-project-works) · [Full setup](docs/operations/SETUP.md) · [Verification](docs/operations/VERIFICATION.md)
+[Open the public network demo](https://nitinsinghdm.github.io/aml-network/) · [Run local analytics](#-run-the-interface) · [How it works](#-how-the-project-works) · [Full setup](docs/operations/SETUP.md) · [Verification](docs/operations/VERIFICATION.md)
+
+## ◉ Public transaction network
+
+**[Open NorthStar Transaction Intelligence →](https://nitinsinghdm.github.io/aml-network/)**
+
+No installation or account required. Follow account connections, replay recorded days,
+filter activity patterns, and select an alert to inspect the exact payments behind it.
+The black-and-white interface uses restrained signal colours, digital transaction
+labels, and an evidence ledger with downloadable filtered records.
+
+![NorthStar transaction network with account connections and AML signal colours](images/network-overview.png)
+
+- **Account network:** actual synthetic bank-account/beneficiary relationships; unresolved counterparties remain explicitly unknown.
+- **Transaction inspection:** select an individual payment point or ledger ID to see its details and related flags.
+- **Evidence-linked alerts:** four existing SQL rules; every exported alert count and amount reconciles with PostgreSQL.
+- **Recorded-day replay:** cumulative UTC-day snapshots, not a live feed or real-time detection claim.
+- **Public synthetic fixture:** 2,110 payments, 100 bank accounts, 30 daily alert groups. Completed payments are shown by default.
+
+[Network methodology, local setup and limitations](docs/operations/NETWORK.md).
+This research demo does not identify criminals, block payments or claim bank production readiness.
 
 ## 📊 Interactive dashboard
 
@@ -39,7 +59,7 @@ pip install -r requirements-dashboard.txt
 streamlit run dashboard_app.py
 ```
 
-Open **[http://localhost:8501](http://localhost:8501)** in your browser. On Windows, activate with `.venv\Scripts\activate`.
+After starting Streamlit, open **[http://localhost:8501](http://localhost:8501)** on that same computer. This local address is not the public demo. On Windows, activate with `.venv\Scripts\activate`.
 
 **No database or cloud account is needed for the bundled preview.** It contains a small, synthetic summary snapshot—no customer names, IBANs or raw transaction CSVs. The source and export time are displayed on every page.
 
@@ -95,6 +115,7 @@ The original PostgreSQL schema, reference seeds, master-data generators and desi
 |---|---|---|
 | PostgreSQL + SQL | Banking model, validation, audit trail, monitoring queries | Implemented and integration-tested |
 | Python | Generation, ingestion, consistent exports and CLI | Runnable locally |
+| Browser network | Public synthetic transaction graph and evidence inspection | Runnable without installation; hosted on GitHub Pages |
 | Streamlit + Plotly | Interactive exploration and pipeline explanations | Runnable with bundled preview or local exports |
 | scikit-learn | Synthetic customer risk classification | Trained/evaluated locally; not production-validated |
 | PySpark | Typed silver/gold Parquet processing | Executed and reconciled with SQL |
