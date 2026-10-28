@@ -64,6 +64,8 @@ def expanded_network_database(database, tmp_path_factory):
     name='aml_network_test_'+uuid4().hex[:10]
     admin.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier(name)))
     params=admin.info.get_parameters();params['dbname']=name
+    # get_parameters omits passwords; retain authentication only in memory.
+    params['password']=admin.info.password
     try:
         with psycopg.connect(**params,autocommit=True,row_factory=dict_row) as conn:
             populate(conn,tmp_path_factory.mktemp('expanded-network'))

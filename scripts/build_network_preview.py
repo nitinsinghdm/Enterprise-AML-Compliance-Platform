@@ -19,6 +19,8 @@ with connect() as admin:
     admin.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier(name)))
     try:
         params=admin.info.get_parameters();params['dbname']=name
+        # get_parameters omits passwords; retain authentication only in memory.
+        params['password']=admin.info.password
         with psycopg.connect(**params,autocommit=True,row_factory=dict_row) as conn, tempfile.TemporaryDirectory() as directory:
             populate(conn,Path(directory))
             print(write_snapshot(conn,args.output,synthetic_data_confirmed=args.synthetic_data_confirmed))
