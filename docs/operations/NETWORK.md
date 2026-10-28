@@ -13,7 +13,7 @@ It needs no database, login, cloud credential or payment permission to explore.
 - Directed paths: payments aggregated by endpoints and status. Width represents value on a bounded logarithmic scale, not proportional risk.
 - Small points on paths: individual recorded payments. Position along a path is for visual spacing, not time, geography or a risk score. Select a point or its ledger ID to inspect the record.
 - Amber: repeated cash deposits; violet: payment bursts; cyan: rapid movement; rose: higher-risk corridors. White can indicate multiple patterns; select a flag to disambiguate. Colour is a pattern category, not severity.
-- The UTC timeline reveals records at one-second resolution. Each alert appears only when its rule qualifies, and its evidence grows as later payments arrive. One playback tick takes one wall-clock second and advances one second, minute or hour of simulated event time. This is not a live bank feed or a detection latency benchmark.
+- The UTC timeline reveals records at one-second resolution. Each alert appears only when its rule qualifies, and its evidence grows as later payments arrive. Replay Step selects one second, minute or hour of simulated event time per tick. Playback Speed offers 0.1×, 0.5×, 1.0×, 1.5× and 2×. At 1.0× a tick takes one wall-clock second; at 0.1× it takes ten seconds and at 2× it takes half a second. Changing speed during playback replaces the timer without resetting the cursor. This is not a live bank feed or a detection latency benchmark.
 
 The default view contains completed payments. Select **All recorded payments** to
 include pending and failed records. Non-completed paths are dashed and never
@@ -123,3 +123,9 @@ Transaction network, Account reviews and How to investigate are separate navigat
 Radio buttons record Not marked, Watch, Under review, Escalated for review or Review closed. Marked accounts gain a square outline. Notes are limited to 1,000 characters and rendered as text. Storage is scoped to the synthetic dataset fingerprint, is not synchronised or authenticated, and provides no compliance audit trail. Export produces a JSON copy. Never enter real personal information.
 
 Sound defaults off and requires a user click. Forward replay produces one soft tone when an alert first triggers, or two higher tones when a burst first reaches 12 completed payments within an hour or a second distinct rule first flags the same account. At most one sound sequence plays per tick. Seeking/filtering/initial load are silent, and visual announcements remain available. This is a transparent demo review-priority policy, not a calibrated risk model.
+
+## Focused map and review entry points
+
+The map occupies a full-width section; filters sit above it and the alert queue/evidence inspector below. Flagged Connections draws only payment records that support currently visible alerts (plus an explicitly selected payment). All Payments draws all matching records. Metrics and ledger totals do not change when this map-only control changes, and the on-screen explanation discloses that distinction.
+
+Pattern cards follow replay time, account, status and time window while comparing all four rules independently of the selected pattern. Clicking a card or Start an AML Review selects an available alert, preferring the documented demo higher-priority policy and then latest evidence update. The selected alert opens all arrived history so contextual evidence stays visible. No new statistical detection claim or finding of crime is made.

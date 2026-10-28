@@ -30,7 +30,7 @@ with sync_playwright() as p:
     page.locator('#account-details').screenshot(path=str(root / 'images/account-review.png'))
     note = '<script>not executable</script> Check source of funds.'
     page.locator('#review-note').fill(note)
-    page.get_by_role('button', name='Save review note', exact=True).click()
+    page.get_by_role('button', name='Save Review Note', exact=True).click()
     page.locator('[data-view="review"]').click()
     assert page.locator('#workspace').is_hidden()
     assert note in page.locator('#review-list').inner_text()
@@ -59,7 +59,7 @@ with sync_playwright() as p:
     assert page.locator('#window').input_value() == 'ALL'
     assert 'Replay paused' in page.locator('#replay-explainer').inner_text()
     assert int(page.locator('#payment-count').inner_text().replace(',', '')) >= 10
-    assert 'Payment burst' in page.locator('#alerts').inner_text()
+    assert 'Payment Burst' in page.locator('#alerts').inner_text()
     # A first rule sounds low; a second distinct rule on the same account sounds high.
     escalation = next(a for a in fixture['alert_events'] if a['rule']=='VELOCITY' and a['count']>=12)
     first = next(a for a in fixture['alert_events'] if a['id']==escalation['id'])

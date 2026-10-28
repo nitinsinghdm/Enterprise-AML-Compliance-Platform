@@ -63,3 +63,9 @@ The interface now introduces the AML purpose, uses plain-language patterns and r
 - Silent Web Audio instrumentation verifies a 440 Hz new-alert tone and two 880 Hz tones when a burst reaches 12 payments. Sound is opt-in; higher priority is a documented demo policy, not model validation.
 - Existing network browser acceptance also passed, including first-trigger timing and mobile layout. Review browser acceptance is included in CI. No detection SQL, database schemas or financial data changed.
 - Restored the portfolio blueprint cover and replaced the outdated workflow diagram. README now explains the investigation story and links to code/setup guides.
+
+### Focused map, labels and playback rates — 29 October 2026
+
+- Browser acceptance verifies 0.1×, 0.5×, 1.0×, 1.5× and 2× against a controlled clock, pause behavior and changing rates during playback without duplicate timers or cursor reset.
+- Full-width map defaults to flagged connections; tests verify the all-payments switch preserves metrics, the four pattern cards, and Start an AML Review opening evidence for an account.
+- Targeted UI labels use Title Case, the crime disclaimer is uppercase, and explanatory body copy stays sentence case. Existing alert-evidence and local review browser checks pass. Detection SQL, synthetic data and account annotations are unchanged.

@@ -1,13 +1,13 @@
 'use strict';
 // Browser-local synthetic review workflow. No server writes or bank decisions.
-const REVIEW_STATES={unmarked:'Not marked',watch:'Watch',review:'Under review',escalated:'Escalated for review',closed:'Review closed'};
+const REVIEW_STATES={unmarked:'Not Marked',watch:'Watch',review:'Under Review',escalated:'Escalated for Review',closed:'Review Closed'};
 let reviewRecords={},reviewStorageKey=null,reviewStorageAvailable=true,reviewNode=null,investigationView='network';
 let audioContext=null,soundEnabled=false,lastReviewClock=null;
 function setInvestigationView(view){
  investigationView=view;
  for(const b of document.querySelectorAll('[data-view]')){if(b.dataset.view===view)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');}
  $('workspace').hidden=view!=='network';document.querySelector('.ledger').hidden=view!=='network';$('account-details').hidden=view!=='network';
- $('review-page').hidden=view!=='review';$('investigation-guide').hidden=view!=='guide';$('method').hidden=view!=='network';
+ $('pattern-overview').hidden=view!=='network';$('review-page').hidden=view!=='review';$('investigation-guide').hidden=view!=='guide';$('method').hidden=view!=='network';
  if(view!=='network')stop();else requestAnimationFrame(resize);
  renderReviewList();
 }
@@ -57,7 +57,7 @@ function renderAccountDetails(){
  }
  const label=element('label','Review note (synthetic data only, up to 1,000 characters)');label.htmlFor='review-note';
  const note=element('textarea');note.id='review-note';note.maxLength=1000;note.value=currentReview.note;note.addEventListener('focus',stop);
- const save=element('button','Save review note');save.addEventListener('click',()=>{saveReview(id,panel.querySelector('input:checked').value,note.value);$('review-save-message').textContent='Review note saved.';});
+ const save=element('button','Save Review Note');save.addEventListener('click',()=>{saveReview(id,panel.querySelector('input:checked').value,note.value);$('review-save-message').textContent='Review note saved.';});
  const message=element('p','Browser-local demo notes; not shared case management or a compliance audit trail.','note');message.id='review-save-message';message.setAttribute('role','status');
  panel.append(field,label,note,save,message);
 }
@@ -89,14 +89,27 @@ function reviewUpdate(){
  }
  lastReviewClock=now;
  $('replay-explainer').textContent=guidedUntil!==null?'Guided example: payments share a line because their endpoints match. The payment count rises as records arrive. At 10 completed payments within one hour, the burst rule triggers and playback pauses for inspection.':$('window').value==='ALL'?'All history: arrived payments remain visible. One path can contain many payment points; the ledger lists each record.':`Rolling ${$('window').value==='3600'?'hour':'24 hours'}: older payments leave this view as the clock advances. A count falling to zero means no payments remain in the selected window, not deletion or a cleared account. Select all history to see earlier records.`;
- renderAccountDetails();renderReviewList();
+ renderAccountDetails();renderReviewList();renderPatternCards();
 }
 window.reviewUpdate=reviewUpdate;
 for(const b of document.querySelectorAll('[data-view]'))b.addEventListener('click',()=>setInvestigationView(b.dataset.view));
 $('review-filter').addEventListener('change',renderReviewList);
 $('sound-toggle').addEventListener('click',async()=>{
  try{if(!soundEnabled){audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();await audioContext.resume();soundEnabled=audioContext.state==='running';}else soundEnabled=false;
- $('sound-toggle').textContent=`Alert sound: ${soundEnabled?'on':'off'}`;$('sound-toggle').setAttribute('aria-pressed',String(soundEnabled));if(!soundEnabled&&audioContext?.state!=='running')$('sound-help').textContent='Audio is unavailable. Visual alerts remain active.';
+ $('sound-toggle').textContent=`Alert Sound: ${soundEnabled?'On':'Off'}`;$('sound-toggle').setAttribute('aria-pressed',String(soundEnabled));if(!soundEnabled&&audioContext?.state!=='running')$('sound-help').textContent='Audio is unavailable. Visual alerts remain active.';
  }catch{soundEnabled=false;$('sound-help').textContent='Audio is unavailable in this browser. Visual alerts remain active.';}
 });
 $('export-reviews').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({synthetic:true,dataset:reviewStorageKey,exported_at:new Date().toISOString(),reviews:reviewRecords},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=element('a');a.href=url;a.download='northstar-demo-review-notes.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+
+function reviewPriority(a){const groups=alertsAtCursor().filter(x=>x.account===a.account);return groups.some(x=>x.rule==='VELOCITY'&&x.count>=12)||new Set(groups.map(x=>x.rule)).size>=2?1:0;}
+function chooseReviewAlert(alert){stop();guidedUntil=null;setInvestigationView('network');$('window').value='ALL';$('map-mode').value='flagged';selectAlert(alert);$('workspace').scrollIntoView({behavior:'auto'});}
+function renderPatternCards(){
+ const available=alertsAtCursor().filter(a=>(!$('account').value||a.account===$('account').value)&&a._time>=windowStart()&&['ALL','COMPLETED'].includes($('status').value));
+ const cards=$('pattern-cards');cards.replaceChildren();
+ for(const [code,rule]of Object.entries(RULES)){
+  const alerts=available.filter(a=>a.rule===code);const button=element('button',undefined,'pattern-card');button.disabled=!alerts.length;button.style.setProperty('--signal',rule.color);button.append(element('strong',rule.name),element('span',`${alerts.length} alert group(s) · ${new Set(alerts.map(a=>a.account)).size} account(s)`));button.addEventListener('click',()=>chooseReviewAlert([...alerts].sort((a,b)=>reviewPriority(b)-reviewPriority(a)||b._time-a._time)[0]));cards.append(button);
+ }
+ $('pattern-summary').textContent='Counts follow the account, status, time window and replay cursor. Pattern cards compare all four rules. Review order uses the documented demo priority, then the latest evidence update; it is not a probability of money laundering.';
+ $('start-review').disabled=!available.length;
+ $('start-review').onclick=()=>chooseReviewAlert([...available].sort((a,b)=>reviewPriority(b)-reviewPriority(a)||b._time-a._time)[0]);
+}
