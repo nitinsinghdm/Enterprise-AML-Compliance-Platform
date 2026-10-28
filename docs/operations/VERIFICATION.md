@@ -55,3 +55,11 @@ The interface now introduces the AML purpose, uses plain-language patterns and r
 - New tests prove no alert version references future payments and reconcile representative event-time SQL prefixes to exported counts and amounts. Final versions match the authoritative SQL groups.
 - Chromium acceptance passed for all four exact first-trigger boundaries, guided replay, next payment, UTC jump, normal body casing/uppercase headings, filters, CSV export, evidence, keyboard controls and 390px mobile layout. README captures show the actual rendered interface.
 - Simulated event time is not processing latency. No real bank connection, representative-data validation or production readiness claim is made.
+
+### Analyst review workspace — 28 October 2026
+
+- Chromium checks passed for account details, radio status changes, browser-local persistence across reloads, review filtering, safe text rendering, JSON export and storage-denied fallback.
+- Guided replay retains history and pauses at the first burst trigger. Tests verify this at accelerated speed, and rolling-window explanations distinguish expired view records from deleted payments.
+- Silent Web Audio instrumentation verifies a 440 Hz new-alert tone and two 880 Hz tones when a burst reaches 12 payments. Sound is opt-in; higher priority is a documented demo policy, not model validation.
+- Existing network browser acceptance also passed, including first-trigger timing and mobile layout. Review browser acceptance is included in CI. No detection SQL, database schemas or financial data changed.
+- Restored the portfolio blueprint cover and replaced the outdated workflow diagram. README now explains the investigation story and links to code/setup guides.

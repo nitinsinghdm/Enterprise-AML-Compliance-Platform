@@ -44,8 +44,9 @@ function update(){
   $('stream-summary').textContent=`${fmt.format(data.transactions.filter(t=>t._time<=cursorTime()).length)} records have arrived · ${fmt.format(data.transactions.length)} total`;
   $('replay-state').textContent=playing?'SIMULATION REPLAYING':'SIMULATION PAUSED';
   renderQueue();renderInspector();buildGraph();renderLedger();
+  window.reviewUpdate?.();
 }
-function selectAlert(a){selectedPayment=null;active=a;$('account').value=a.account;$('status').value='COMPLETED';$('pattern').value=a.rule;$('day').value=Math.max(Number($('day').value),(a._time-minTime)/1000);page=0;zoom=1;pan={x:0,y:0};update();}
+function selectAlert(a){window.inspectNetworkNode?.(null);stop();guidedUntil=null;selectedPayment=null;active=a;$('account').value=a.account;$('status').value='COMPLETED';$('pattern').value=a.rule;$('day').value=Math.max(Number($('day').value),(a._time-minTime)/1000);page=0;zoom=1;pan={x:0,y:0};update();}
 function renderQueue(){
  const list=$('alerts');list.replaceChildren();
  if(!visibleAlerts.length){list.append(element('p','No alerts have triggered in this view. This does not establish that an account is safe.','note'));return;}
@@ -55,7 +56,7 @@ function renderQueue(){
    button.append(element('strong',rule.name));const line=element('small');line.append(element('span',`${a.account} / ${a.timestamp.slice(11,19)} UTC`),element('span',eur(a.amount)));button.append(line);button.addEventListener('click',()=>selectAlert(a));list.append(button);
  }
 }
-function selectPayment(t){selectedPayment=t;active=null;$('account').value=t.account;$('pattern').value='';page=0;zoom=1;pan={x:0,y:0};update();}
+function selectPayment(t){window.inspectNetworkNode?.(null);stop();guidedUntil=null;selectedPayment=t;active=null;$('account').value=t.account;$('pattern').value='';page=0;zoom=1;pan={x:0,y:0};update();}
 function renderInspector(){
  const panel=$('inspector');panel.replaceChildren();panel.append(element('p','02 — FOLLOW THE EVIDENCE','eyebrow'));
  if(selectedPayment){
@@ -69,7 +70,7 @@ function renderInspector(){
    panel.append(element('p',`Recorded country: ${t.country} · channel: ${t.channel}. No inferred location or account ownership.`,'note'));
    const clear=element('button','Return to all accounts','secondary');clear.style.marginTop='16px';clear.addEventListener('click',reset);panel.append(clear);return;
  }
- if(!active){panel.append(element('h3','Select a flag.'),element('p','Isolate the account, follow the highlighted payments, and inspect the rule behind the signal.'));return;}
+ if(!active){const id=$('account').value;if(id){const account=data.accounts.find(a=>a.id===id);panel.append(element('h3',id),element('p',`Synthetic customer ${account.customer}. Inspect recorded flows, counterparties and review status below.`));const details=element('button','Open account details','secondary');details.addEventListener('click',()=>{$('account-details').scrollIntoView({behavior:'auto'});});panel.append(details);}else panel.append(element('h3','Select an account or flag.'),element('p','Choose an account for its recorded activity and review status, or select an alert for its supporting evidence.'));return;}
  const r=RULES[active.rule];panel.style.setProperty('--signal',r.color);
  panel.append(element('h3',r.name),element('p',r.why),element('div',`${active.account} · ${active.timestamp.slice(11,19)} UTC\n${active.evidence.length} supporting payment(s)\n${eur(active.amount)} in counted payments`,'evidence-summary'));
  panel.querySelector('.evidence-summary').style.whiteSpace='pre-line';
@@ -131,7 +132,8 @@ function draw(){
    if(n.signals.size){ctx.beginPath();ctx.arc(p.x,p.y,r+4,0,Math.PI*2);ctx.strokeStyle=color;ctx.globalAlpha=.4;ctx.lineWidth=1;ctx.stroke();ctx.globalAlpha=1;}
    ctx.beginPath();if(n.kind==='unknown'){ctx.moveTo(p.x,p.y-r);ctx.lineTo(p.x+r,p.y);ctx.lineTo(p.x,p.y+r);ctx.lineTo(p.x-r,p.y);ctx.closePath();}else ctx.arc(p.x,p.y,r,0,Math.PI*2);
    ctx.fillStyle=n.kind==='bank'?color:'#0e1012';ctx.strokeStyle=color;ctx.lineWidth=1;ctx.fill();ctx.stroke();
-   if($('account').value||zoom>2.2){ctx.font='10px "IBM Plex Mono", monospace';ctx.fillStyle='#c3c7cf';ctx.textAlign='center';let label=n.kind==='unknown'?(n.id.startsWith('UN-IN')?'Unidentified sources':'Unidentified recipients'):n.id;ctx.fillText(label,p.x,Math.min(h-35,p.y+22));}
+   const mark=n.kind==='bank'?window.accountReviewStatus?.(n.id):null;if(mark&&mark!=='unmarked'){ctx.strokeStyle='#e0b777';ctx.lineWidth=1.5;ctx.strokeRect(p.x-r-5,p.y-r-5,2*r+10,2*r+10);}
+   if($('account').value||zoom>2.2){ctx.font='10px PlexMono, monospace';ctx.fillStyle='#c3c7cf';ctx.textAlign='center';let label=n.kind==='unknown'?(n.id.startsWith('UN-IN')?'Unidentified sources':'Unidentified recipients'):n.id;ctx.fillText(label,p.x,Math.min(h-35,p.y+22));}
  }
 }
 function resize(){const rect=canvas.getBoundingClientRect();w=rect.width;h=rect.height;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);draw();}
@@ -147,13 +149,14 @@ function renderLedger(){
  if(!rows.length){const tr=element('tr'),td=element('td','No records match these filters.');td.colSpan=6;tr.append(td);body.append(tr);}
  $('page-count').textContent=`${fmt.format(rows.length)} records · page ${page+1} / ${count}`;$('previous').disabled=page===0;$('next').disabled=page>=count-1;
 }
-function reset(){stop();selectedPayment=null;active=null;page=0;zoom=1;pan={x:0,y:0};$('account').value='';$('pattern').value='';$('status').value='COMPLETED';$('window').value='ALL';$('day').value=(maxTime-minTime)/1000;update();}
+let guidedUntil=null;
+function reset(){window.inspectNetworkNode?.(null);guidedUntil=null;stop();selectedPayment=null;active=null;page=0;zoom=1;pan={x:0,y:0};$('account').value='';$('pattern').value='';$('status').value='COMPLETED';$('window').value='ALL';$('day').value=(maxTime-minTime)/1000;update();}
 function stop(){playing=false;clearInterval(timer);$('play').textContent='▶';$('play').setAttribute('aria-label','Play simulated transactions');$('replay-state').textContent='SIMULATION PAUSED';draw();}
 function download(){const fields=['id','account','beneficiary','timestamp','amount','direction','kind','country','status','channel'];const quote=v=>'"'+String(v??'').replaceAll('"','""')+'"';const csv=[fields.join(','),...rows.map(t=>fields.map(k=>quote(t[k])).join(','))].join('\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=element('a');a.href=url;a.download='northstar-synthetic-view.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 let drag=null;
 canvas.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,px:pan.x,py:pan.y};canvas.setPointerCapture(e.pointerId);});
 canvas.addEventListener('pointermove',e=>{if(drag){pan={x:drag.px+e.clientX-drag.x,y:drag.py+e.clientY-drag.y};draw();return;}const rect=canvas.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top,n=nodes.find(n=>{const p=position(n);return Math.hypot(p.x-x,p.y-y)<10;});const tip=$('tooltip');tip.hidden=!n;if(n){tip.textContent=n.kind==='unknown'?`Unidentified counterparties for ${n.account}; no shared identity is established.`:`${n.id} · ${n.kind==='bank'?'bank account':'external beneficiary'}${n.signals.size?' · review signal':''}`;tip.style.left=Math.max(8,Math.min(x+12,w-230))+'px';tip.style.top=Math.max(30,Math.min(y+12,h-75))+'px';}});
-canvas.addEventListener('pointerup',e=>{if(!drag)return;const moved=Math.hypot(e.clientX-drag.x,e.clientY-drag.y);drag=null;if(moved<5){const r=canvas.getBoundingClientRect();const n=nodes.find(n=>{const p=position(n);return Math.hypot(p.x-e.clientX+r.left,p.y-e.clientY+r.top)<12;});if(n){selectedPayment=null;active=null;$('account').value=n.account;page=0;zoom=1;pan={x:0,y:0};update();}else{const point=paymentPoints.find(p=>Math.hypot(p.x-e.clientX+r.left,p.y-e.clientY+r.top)<5);if(point)selectPayment(point.tx);}}});
+canvas.addEventListener('pointerup',e=>{if(!drag)return;const moved=Math.hypot(e.clientX-drag.x,e.clientY-drag.y);drag=null;if(moved<5){const r=canvas.getBoundingClientRect();const n=nodes.find(n=>{const p=position(n);return Math.hypot(p.x-e.clientX+r.left,p.y-e.clientY+r.top)<12;});if(n){stop();guidedUntil=null;window.inspectNetworkNode?.(n);selectedPayment=null;active=null;$('account').value=n.account;page=0;zoom=1;pan={x:0,y:0};update();}else{const point=paymentPoints.find(p=>Math.hypot(p.x-e.clientX+r.left,p.y-e.clientY+r.top)<5);if(point)selectPayment(point.tx);}}});
 canvas.addEventListener('pointercancel',()=>drag=null);canvas.addEventListener('pointerleave',()=>{$('tooltip').hidden=true;});
 canvas.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-','0'].includes(e.key)){e.preventDefault();if(e.key==='0'){zoom=1;pan={x:0,y:0};}else if(e.key==='+')zoom=Math.min(5,zoom*1.2);else if(e.key==='-')zoom=Math.max(.5,zoom/1.2);else{pan.x+=e.key==='ArrowLeft'?25:e.key==='ArrowRight'?-25:0;pan.y+=e.key==='ArrowUp'?25:e.key==='ArrowDown'?-25:0;}draw();}});
 async function start(){try{
@@ -165,16 +168,16 @@ async function start(){try{
  for(const a of data.accounts)option($('account'),a.id,`${a.id} · ${a.customer}`);for(const [code,rule]of Object.entries(RULES))option($('pattern'),code,rule.name);
  $('day').max=(maxTime-minTime)/1000;$('day').value=(maxTime-minTime)/1000;$('jump').min=new Date(minTime).toISOString().slice(0,19);$('jump').max=new Date(maxTime).toISOString().slice(0,19);$('provenance').textContent=`${data.provenance} Rules version: ${data.rules_version}.`;
  $('loading').hidden=true;$('app').hidden=false;
- for(const id of ['account','pattern','status','window'])$(id).addEventListener('change',()=>{selectedPayment=null;active=null;page=0;zoom=1;pan={x:0,y:0};update();});
- $('day').addEventListener('input',()=>{stop();page=0;update();});$('reset').addEventListener('click',reset);
+ for(const id of ['account','pattern','status','window'])$(id).addEventListener('change',()=>{window.inspectNetworkNode?.(null);guidedUntil=null;selectedPayment=null;active=null;page=0;zoom=1;pan={x:0,y:0};update();});
+ $('day').addEventListener('input',()=>{guidedUntil=null;stop();page=0;update();});$('reset').addEventListener('click',reset);
  $('zoom-in').addEventListener('click',()=>{zoom=Math.min(5,zoom*1.25);draw();});$('zoom-out').addEventListener('click',()=>{zoom=Math.max(.5,zoom/1.25);draw();});$('fit').addEventListener('click',()=>{zoom=1;pan={x:0,y:0};draw();});
  $('previous').addEventListener('click',()=>{page--;renderLedger();});$('next').addEventListener('click',()=>{page++;renderLedger();});$('download').addEventListener('click',download);
- function tick(){if(cursorTime()>=maxTime){stop();return;}$('day').value=Math.min(Number($('day').max),Number($('day').value)+Number($('speed').value));page=0;update();}
+ function tick(){if(cursorTime()>=maxTime){stop();return;}$('day').value=Math.min(Number($('day').max),guidedUntil===null?Infinity:(guidedUntil-minTime)/1000,Number($('day').value)+Number($('speed').value));page=0;update();if(guidedUntil!==null&&cursorTime()>=guidedUntil){guidedUntil=null;stop();$('replay-explainer').textContent='The burst has reached 10 completed payments within one hour. Replay paused so you can select the Payment burst alert and inspect the evidence.';}}
  function play(){selectedPayment=null;active=null;playing=true;$('play').textContent='Ⅱ';$('play').setAttribute('aria-label','Pause simulated transactions');if(cursorTime()>=maxTime)$('day').value=0;update();timer=setInterval(tick,1000);}
  $('play').addEventListener('click',()=>playing?stop():play());
- $('next-event').addEventListener('click',()=>{stop();const next=data.transactions.find(t=>t._time>cursorTime()&&(!$('account').value||t.account===$('account').value));if(next){$('day').value=(next._time-minTime)/1000;page=0;update();}});
- $('jump').addEventListener('change',()=>{stop();const value=Date.parse($('jump').value+'Z');if(Number.isFinite(value)){$('day').value=(Math.max(minTime,Math.min(maxTime,value))-minTime)/1000;page=0;update();}});
- $('watch-demo').addEventListener('click',()=>{reset();const event=data.alert_events.find(a=>a.rule==='VELOCITY');if(!event)return;const earliest=Math.min(...data.transactions.filter(t=>event.evidence.includes(t.id)).map(t=>t._time));$('account').value=event.account;$('window').value='3600';$('day').value=Math.max(0,(earliest-minTime)/1000-1);$('speed').value='60';update();$('workspace').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});play();});
+ $('next-event').addEventListener('click',()=>{guidedUntil=null;stop();const next=data.transactions.find(t=>t._time>cursorTime()&&(!$('account').value||t.account===$('account').value));if(next){$('day').value=(next._time-minTime)/1000;page=0;update();}});
+ $('jump').addEventListener('change',()=>{guidedUntil=null;stop();const value=Date.parse($('jump').value+'Z');if(Number.isFinite(value)){$('day').value=(Math.max(minTime,Math.min(maxTime,value))-minTime)/1000;page=0;update();}});
+ $('watch-demo').addEventListener('click',()=>{reset();const event=data.alert_events.find(a=>a.rule==='VELOCITY');if(!event)return;const earliest=Math.min(...data.transactions.filter(t=>event.evidence.includes(t.id)).map(t=>t._time));window.setInvestigationView?.('network');guidedUntil=event._time;$('account').value=event.account;$('window').value='ALL';$('day').value=Math.max(0,(earliest-minTime)/1000-1);$('speed').value='60';update();$('workspace').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});play();});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});new ResizeObserver(resize).observe(canvas);update();resize();
  }catch(err){$('app').hidden=true;$('loading').textContent='The demo could not load its snapshot. Please reload, or open the project repository for the local setup.';console.error(err);}}
 start();

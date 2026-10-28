@@ -59,7 +59,7 @@ with sync_playwright() as p:
         assert page.locator('#transactions tr').count()>0
     page.locator('#watch-demo').click()
     page.locator('#play').click()
-    assert page.locator('#window').input_value()=='3600'
+    assert page.locator('#window').input_value()=='ALL'
     before=int(page.locator('#day').input_value())
     page.locator('#next-event').click()
     assert int(page.locator('#day').input_value())>before
