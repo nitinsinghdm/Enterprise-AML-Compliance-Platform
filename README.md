@@ -65,37 +65,27 @@ The original banking schemas, reference data and master-data generators are pres
 | Looker Studio | Compatible datasets and a setup guide; report publishing requires your account |
 | GitHub Actions | Database, Spark, interface and browser checks; required integration check protects main |
 
-## RUN IT LOCALLY
+## THE INVESTIGATION STORY
 
-The browser interface needs only Python to serve its bundled synthetic data:
+A synthetic customer makes several payments. Individually, they may look ordinary. Taken together, a burst, repeated cash deposits or a quick movement of incoming funds can deserve a closer look.
 
-```sh
-python -m http.server 8766 --bind 127.0.0.1 --directory web/network
-```
+The platform first checks that each record is usable: references exist, required fields are valid and repeated loads do not duplicate payments. SQL then evaluates the monitoring rules. During replay, an alert appears only after the payments needed to trigger it have arrived.
 
-Open **http://127.0.0.1:8766**. No database, login or cloud credentials are needed for this preview.
+Select **Watch an alert form** to follow one account. Several payments may share one line because they share endpoints. The counter measures payment records, not lines. The guided replay keeps arrived records visible and pauses when the payment-burst threshold is reached. In a rolling last-hour view, older payments disappear from the view as time advances; they have not been deleted or declared safe.
 
-For the local analytics dashboard, use Python 3.12:
+Select an account to inspect its incoming and outgoing flows, payment statuses, recorded beneficiaries and triggered rule types. These are transaction totals, not balances. Select an alert for its exact evidence, or a transaction ID for the individual payment. Unknown counterparties and missing owner information stay explicitly unknown.
 
-```sh
-python3.12 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-dashboard.txt
-streamlit run dashboard_app.py
-```
+A reviewer can mark an account **Watch**, **Under review**, **Escalated for review** or **Review closed** using radio buttons, and add a short note. The **Account reviews** view brings those annotations together. Closing a review does not establish that an account is safe. Notes are saved in this browser for the synthetic dataset and can be exported; they are not shared bank cases or an authenticated audit trail.
 
-Open **http://localhost:8501**. On Windows, activate with `.venv\Scripts\activate`. Its bundled summary/model preview is a separate, smaller 100-customer dataset, not the expanded browser fixture.
+![Account details with recorded flows and review-status controls](images/account-review.png)
 
-To run the full pipeline, follow the [database and dependency setup](docs/operations/SETUP.md), then:
+Optional sound draws attention to a new alert during replay. A soft tone means a rule has triggered; two higher tones mean a burst has reached 12 payments within an hour or a second distinct rule has flagged the same account. This is an explainable demonstration policy for review priority, not a validated measure of criminal activity. Sound starts only when enabled, and visual messages remain available.
 
-```sh
-python -m aml demo --customers 250 --per-account 40
-python -m aml validate
-python -m aml export
-python -m aml train
-```
+## WHERE EACH PART FITS
 
-[Network fixture reproduction](docs/operations/NETWORK.md) uses an isolated temporary database and adds deterministic seconds to timestamps for replay. Generated bulk CSVs and secrets stay out of Git.
+The public network tells the transaction-level story. The separate local Streamlit dashboard explains aggregate activity, pipeline quality and synthetic customer scores. Python coordinates generation and exports; PostgreSQL supplies the validated records and monitoring logic. PySpark prepares analytical datasets. Snowflake loading and Looker Studio reporting are optional downstream integrations requiring your cloud setup.
+
+For installation, commands and reproducibility, see the [setup guide](docs/operations/SETUP.md) and [network guide](docs/operations/NETWORK.md). The README focuses on what the project does; those guides explain how to run it.
 
 ## POTENTIAL VALUE FOR A BANK
 
@@ -107,11 +97,6 @@ The current demo does not provide live bank ingestion, production access control
 
 ## VERIFY AND EXPLORE
 
-```sh
-pip install -r requirements-dev.txt -r requirements-dashboard.txt
-python -m pytest -q
-```
-
 Database and Spark tests require the configuration in the [testing guide](docs/operations/SETUP.md#tests); unavailable integration dependencies are explicitly skipped. Browser checks cover filters, exact alert trigger times, evidence, export, replay and mobile layout.
 
 - [Network meaning, replay contracts and browser checks](docs/operations/NETWORK.md)
@@ -121,13 +106,6 @@ Database and Spark tests require the configuration in the [testing guide](docs/o
 - [Looker Studio setup](dashboard/README.md)
 - [Original database design](docs/database/Database-Design.md)
 
-```text
-aml/                 Pipeline, model, Spark, warehouse and network export
-sql/                 Banking schema, validation and monitoring rules
-web/network/         Public browser interface and synthetic fixture
-dashboard_app.py     Local Streamlit analytics interface
-tests/               Data integrity, reconciliation and interface tests
-docs/operations/     Setup, operational contracts and verification
-```
+
 
 **Nitin Singh** · Data Analytics & Data Engineering · [Portfolio](https://nitinsinghdm.github.io/)

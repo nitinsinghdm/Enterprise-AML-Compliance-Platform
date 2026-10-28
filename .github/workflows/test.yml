@@ -51,3 +51,4 @@ jobs:
           network_server_pid=$!
           trap 'kill "$network_server_pid"' EXIT
           python scripts/check_network_browser.py
+          python scripts/check_review_browser.py
