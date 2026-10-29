@@ -142,3 +142,5 @@ Account details expose recorded counterparties and unidentified incoming/outgoin
 Map Symbols explains endpoint shapes, payment points/direction, pending/failed paths and W/R/E/C review marks. Watch, Under Review, Escalated for Review and Review Closed have explicit next steps. Escalation and closure require notes. The list prioritises escalated accounts. Up to 20 local status changes are retained per account; this is browser storage, not an authenticated audit log, shared case system, report submission or payment intervention. Existing annotations survive the additive currency fields.
 
 Alert Sound has a 0–100% volume control and a Test Sound action. At zero volume it creates no tones. Actual loudness depends on device volume. Two higher tones indicate the documented escalation policy, not proof of crime.
+
+The map toolbar also provides **Back to All Accounts**, directly above the canvas. It restores all-account/all-payment scope, clears filters and selected evidence, and resets zoom/pan while preserving the replay cursor. Map Symbols and Activity Signals share the same 12px body type. Dropdown chevrons sit 12px inside the control edge.
