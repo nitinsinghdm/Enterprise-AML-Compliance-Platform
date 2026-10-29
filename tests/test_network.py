@@ -49,13 +49,19 @@ def test_network_reconciles_sql_and_does_not_invent_links(database):
         assert set(alert['counted']) <= set(alert['evidence']) <= ids
         assert all(t['status']=='COMPLETED' for t in data['transactions'] if t['id'] in alert['evidence'])
     assert all(t['beneficiary'] is None for t in data['transactions'] if t['direction']=='INCOMING')
-    assert all(set(t)=={'id','account','beneficiary','timestamp','day','amount','direction','kind','country','status','channel'} for t in data['transactions'])
+    assert all(t['currency'] and t['original_amount'] > 0 for t in data['transactions'])
+    assert all(set(t)=={'id','account','beneficiary','timestamp','day','amount','direction','kind','country','status','channel','currency','original_amount'} for t in data['transactions'])
 
 
 def test_checked_in_snapshot_matches_reproducible_database(expanded_network_database):
     conn=expanded_network_database
     public=json.loads((Path(__file__).resolve().parents[1]/'web/network/data.json').read_text())
     assert public==build_snapshot(conn)
+    assert {t['currency'] for t in public['transactions']}=={'EUR','USD','GBP'}
+    rates={'EUR':Decimal('1'),'USD':Decimal('.8'),'GBP':Decimal('.9')}
+    for t in public['transactions']:
+        assert (Decimal(str(t['original_amount']))*rates[t['currency']]).quantize(Decimal('.01'))==Decimal(str(t['amount']))
+    assert conn.execute('SELECT count(*) AS n FROM core.transactions t JOIN core.accounts a USING(account_id) WHERE t.currency_id<>a.currency_id').fetchone()['n']==0
 
 
 @pytest.fixture(scope='module')

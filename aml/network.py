@@ -55,8 +55,9 @@ def evidence_for(rows: list[dict], rule: str, day) -> tuple[list[dict], list[dic
 def build_snapshot(conn) -> dict:
     with conn.transaction():
         conn.execute('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY')
-        rows = conn.execute('''SELECT f.*, t.beneficiary_id FROM analytics.transaction_facts f
+        rows = conn.execute('''SELECT f.*, t.beneficiary_id, c.currency_code FROM analytics.transaction_facts f
             JOIN core.transactions t USING(transaction_id)
+            JOIN reference.currencies c ON c.currency_id=f.currency_id
             ORDER BY f.transaction_timestamp,f.transaction_id''').fetchall()
         alerts = conn.execute('SELECT * FROM analytics.aml_alerts ORDER BY transaction_date,account_id,rule_code').fetchall()
     grouped = defaultdict(list)
@@ -109,7 +110,7 @@ def build_snapshot(conn) -> dict:
         transactions=[dict(id=transactions[str(r['transaction_id'])], account=accounts[str(r['account_id'])],
             beneficiary=beneficiaries.get(str(r['beneficiary_id'])) if r['transaction_direction'] == 'OUTGOING' else None,
             timestamp=r['transaction_timestamp'].isoformat()+'Z', day=r['transaction_date'].isoformat(),
-            amount=float(r['amount_eur']), direction=r['transaction_direction'], kind=r['transaction_type_name'],
+            amount=float(r['amount_eur']), currency=r['currency_code'], original_amount=float(r['amount']), direction=r['transaction_direction'], kind=r['transaction_type_name'],
             country=r['destination_country'], status=r['transaction_status'], channel=r['channel']) for r in rows],
         alerts=output_alerts, alert_events=sorted(alert_events, key=lambda event: (event['timestamp'], event['id'])))
 
