@@ -176,6 +176,7 @@ async function start(){try{
  const countryNames=new Intl.DisplayNames(['en'],{type:'region'});
  for(const key of DETAIL_FILTERS)for(const value of [...new Set(data.transactions.map(t=>t[key]))].sort())option($(key),value,key==='country'?`${countryNames.of(value)} (${value})`:key==='currency'?value:pretty(value).replace(/\b\w/g,c=>c.toUpperCase()));
  $('back-payments').addEventListener('click',allPayments);
+ $('back-accounts').addEventListener('click',()=>{allPayments();$('fit').click();});
  for(const a of data.alert_events)a._time=Date.parse(a.timestamp);
  minTime=data.transactions[0]._time;maxTime=data.transactions[data.transactions.length-1]._time;
  for(const a of data.accounts)option($('account'),a.id,`${a.id} · ${a.customer}`);for(const [code,rule]of Object.entries(RULES))option($('pattern'),code,rule.name);

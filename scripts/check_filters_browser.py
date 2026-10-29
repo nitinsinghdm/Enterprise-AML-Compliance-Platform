@@ -27,10 +27,14 @@ with sync_playwright() as p:
     page.locator('.transaction-link').first.click()
     assert 'Original amount:' in page.locator('#inspector').inner_text()
     cursor=page.locator('#day').input_value()
-    page.locator('#back-payments').click()
+    page.locator('#back-accounts').click()
     assert page.locator('#payment-count').inner_text()==f"{len(data['transactions']):,}"
     assert page.locator('#day').input_value()==cursor
     assert page.locator('#currency').input_value()==''
+    assert page.locator('#account').input_value()==''
+    assert page.locator('#map-mode').input_value()=='all'
+    assert page.locator('.legend>div').first.evaluate('(e)=>getComputedStyle(e).fontSize')==page.locator('.symbol-legend span').first.evaluate('(e)=>getComputedStyle(e).fontSize')
+    assert page.locator('#currency').evaluate('(e)=>getComputedStyle(e).paddingRight')=='36px'
     # Full supporting evidence is restored when opening a matching alert.
     page.locator('#reset').click()
     event=data['alerts'][0]
