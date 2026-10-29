@@ -37,7 +37,7 @@ This helps a reviewer answer three questions: **Which pattern triggered? Which p
 | Coloured signals | The type of AML pattern, not a verdict or severity rating |
 | Evidence ledger | Payments behind the selected alert, with counted and contextual rows separated |
 
-The public fixture contains **10,281 transactions across 250 accounts**, with **74 account/day/rule alert groups** over the complete period. Completed payments are shown by default; failed and pending records remain inspectable. Counts change with your filters and replay time.
+The public fixture contains **10,281 transactions across 250 accounts**, with **74 account/day/rule alert groups** over the complete period. Completed payments are shown by default; failed and pending records remain inspectable. Counts change with your filters and replay time. Filter by country, source currency, transaction type, channel and direction. The fixture includes EUR, USD and GBP payments; totals and rule thresholds stay in EUR so they can be compared consistently. Open a payment to see its original amount. **Back to All Payments** clears the selection and filters while keeping the replay clock in place. Opening an alert restores its complete evidence, including records outside your previous filters.
 
 ![Selected AML alert and its supporting payment evidence](images/network-evidence.png)
 
@@ -83,11 +83,11 @@ Select **Watch an alert form** to follow one account. Several payments may share
 
 Select an account to inspect its incoming and outgoing flows, payment statuses, recorded beneficiaries and triggered rule types. These are transaction totals, not balances. Select an alert for its exact evidence, or a transaction ID for the individual payment. Unknown counterparties and missing owner information stay explicitly unknown.
 
-A reviewer can mark an account **Watch**, **Under review**, **Escalated for review** or **Review closed** using radio buttons, and add a short note. The **Account reviews** view brings those annotations together. Closing a review does not establish that an account is safe. Notes are saved in this browser for the synthetic dataset and can be exported; they are not shared bank cases or an authenticated audit trail.
+A reviewer can mark an account **Watch**, **Under Review**, **Escalated for Review** or **Review Closed** using radio buttons, and add a short note. The **Account reviews** view brings those annotations together. Closing a review does not establish that an account is safe. Watch keeps an account on your follow-up list. Under Review records active investigation. Escalated for Review moves it to the top of the review list and requires a reason; Review Closed also requires a reason. The interface shows the next step and recent local status changes. Nothing is automatically sent to a bank, assigned to another analyst or used to block a payment. Notes are saved in this browser for the synthetic dataset and can be exported; they are not shared bank cases or an authenticated audit trail.
 
 ![Account details with recorded flows and review-status controls](images/account-review.png)
 
-Optional sound draws attention to a new alert during replay. A soft tone means a rule has triggered; two higher tones mean a burst has reached 12 payments within an hour or a second distinct rule has flagged the same account. This is an explainable demonstration policy for review priority, not a validated measure of criminal activity. Sound starts only when enabled, and visual messages remain available.
+Optional sound draws attention to a new alert during replay. A tone means a rule has triggered; two higher tones mean a burst has reached 12 payments within an hour or a second distinct rule has flagged the same account. This is an explainable demonstration policy for review priority, not a validated measure of criminal activity. Sound starts only when enabled, and visual messages remain available. Adjust the volume or use Test Sound before playback; device volume also affects loudness.
 
 ## WHERE EACH PART FITS
 

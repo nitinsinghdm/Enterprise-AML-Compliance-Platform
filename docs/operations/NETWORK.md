@@ -129,3 +129,16 @@ Sound defaults off and requires a user click. Forward replay produces one soft t
 The map occupies a full-width section; filters sit above it and the alert queue/evidence inspector below. Flagged Connections draws only payment records that support currently visible alerts (plus an explicitly selected payment). All Payments draws all matching records. Metrics and ledger totals do not change when this map-only control changes, and the on-screen explanation discloses that distinction.
 
 Pattern cards follow replay time, account, status and time window while comparing all four rules independently of the selected pattern. Clicking a card or Start an AML Review selects an available alert, preferring the documented demo higher-priority policy and then latest evidence update. The selected alert opens all arrived history so contextual evidence stays visible. No new statistical detection claim or finding of crime is made.
+
+
+## Currency, filters and review workflow
+
+The public fixture contains 3,288 EUR, 3,691 USD and 3,302 GBP transactions. Each account uses one source currency. Fixed **synthetic demonstration rates** (EUR 1, USD 0.8, GBP 0.9 EUR per unit) preserve every existing EUR transaction amount and SQL alert result; these are not market or live FX rates. Original amounts and currency appear in payment details, the ledger and CSV. Aggregate values and AML thresholds remain EUR.
+
+Country, currency, transaction type, channel and direction filters combine. An alert qualifies when at least one supporting payment matches; opening it clears these filters to display its complete evidence. Back to All Payments clears account, pattern and detail filters, selects all statuses and history, and preserves the replay cursor.
+
+Account details expose recorded counterparties and unidentified incoming/outgoing groups, with counts, EUR value, available countries, currencies, channels and first/latest times. Missing source identifiers remain unknown; a country field does not establish a person's location or a shared owner.
+
+Map Symbols explains endpoint shapes, payment points/direction, pending/failed paths and W/R/E/C review marks. Watch, Under Review, Escalated for Review and Review Closed have explicit next steps. Escalation and closure require notes. The list prioritises escalated accounts. Up to 20 local status changes are retained per account; this is browser storage, not an authenticated audit log, shared case system, report submission or payment intervention. Existing annotations survive the additive currency fields.
+
+Alert Sound has a 0–100% volume control and a Test Sound action. At zero volume it creates no tones. Actual loudness depends on device volume. Two higher tones indicate the documented escalation policy, not proof of crime.

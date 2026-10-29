@@ -69,3 +69,11 @@ The interface now introduces the AML purpose, uses plain-language patterns and r
 - Browser acceptance verifies 0.1×, 0.5×, 1.0×, 1.5× and 2× against a controlled clock, pause behavior and changing rates during playback without duplicate timers or cursor reset.
 - Full-width map defaults to flagged connections; tests verify the all-payments switch preserves metrics, the four pattern cards, and Start an AML Review opening evidence for an account.
 - Targeted UI labels use Title Case, the crime disclaimer is uppercase, and explanatory body copy stays sentence case. Existing alert-evidence and local review browser checks pass. Detection SQL, synthetic data and account annotations are unchanged.
+
+### Currency filters and account follow-up — 29 October 2026
+
+- Full local suite: **45 passed in 61.27s**, no skips, with PostgreSQL 18 and Java 17 / Spark enabled in an isolated test database.
+- All three Chromium acceptance scripts passed: network, review and new filter/workflow coverage. Checks include combined filters, complete alert evidence, return navigation, source context, escalation rationale, audio gain/mute and mobile layout.
+- Fresh fixture matches the committed export, source currency matches account currency, and fixed demonstration FX reconciles to EUR. All previous EUR amounts, 74 final alert groups and alert event versions were preserved.
+- Portfolio grey palette and snake verified in dark/light themes and at mobile width. Striped N monogram replaces the header wordmark across all six pages and the favicon.
+- Review status and history remain browser-local; no bank feed or external case assignment was added.
